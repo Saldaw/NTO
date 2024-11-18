@@ -6,6 +6,7 @@ using System.Net.Http;
 using Unity.VisualScripting;
 using UnityEngine;
 using Newtonsoft.Json;
+using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
@@ -14,8 +15,11 @@ public class Inventory : MonoBehaviour
     const string add_resurs2 = "add_resurs2";
     const string add_resurs3 = "add_resurs3";
     const string add_resurs4 = "add_resurs4";
+    const string add_resurs5 = "add_resurs4";
+    const string add_gold = "add_gold";
     //-----------------------------------------------------------\\
     private string playerName;
+    private bool online;
     //--------------------------Классы--------------------------\\
     [Serializable] public class PlayerInventory : ICloneable
     {
@@ -23,18 +27,20 @@ public class Inventory : MonoBehaviour
         public int resurs2;
         public int resurs3;
         public int resurs4;
+        public int resurs5;
+        public int gold;
 
         public object Clone()
         {
             return MemberwiseClone();
         }
-    }//Класс инвентаря игрока
-    [Serializable] private class AnswerServer//Класс ответа сервера
+    } //Класс инвентаря игрока
+    [Serializable] private class AnswerServer//Класс ответа сервера 
     {
         public string name;
         public PlayerInventory resources;
     }
-    [Serializable] private class Log//Класс лога
+    [Serializable] private class Log//Класс лога 
     {
         public string comment;
         public string player_name;
@@ -50,6 +56,8 @@ public class Inventory : MonoBehaviour
         resurs2 = 0,
         resurs3 = 0,
         resurs4 = 0,
+        resurs5 = 0,
+        gold = 0,
     };
     private PlayerInventory changesPlayerInventory = new PlayerInventory
     {
@@ -57,35 +65,44 @@ public class Inventory : MonoBehaviour
         resurs2 = 0,
         resurs3 = 0,
         resurs4 = 0,
+        resurs5 = 0,
+        gold = 0,
     };
     //-----------------------------------------------------------\\
     
-    public void ChangeResurs(PlayerInventory changes, string comment)//Изменить колличество ресурсов
+    public void ChangeResurs(PlayerInventory changes, string comment)//Изменить колличество ресурсов 
     {
         Dictionary<string, int> resourcesChanged = new Dictionary<string, int>();
 
         localPlayerInventory.resurs1 += changes.resurs1;
-        changesPlayerInventory.resurs1 += changes.resurs1;
         localPlayerInventory.resurs2 += changes.resurs2;
-        changesPlayerInventory.resurs2 += changes.resurs2;
         localPlayerInventory.resurs3 += changes.resurs3;
-        changesPlayerInventory.resurs3 += changes.resurs3;
         localPlayerInventory.resurs4 += changes.resurs4;
-        changesPlayerInventory.resurs4 += changes.resurs4;
-
-        if (changes.resurs1 != 0) resourcesChanged.Add(add_resurs1, changes.resurs1);
-        if (changes.resurs2 != 0) resourcesChanged.Add(add_resurs2, changes.resurs2);
-        if (changes.resurs3 != 0) resourcesChanged.Add(add_resurs3, changes.resurs3);
-        if (changes.resurs4 != 0) resourcesChanged.Add(add_resurs4, changes.resurs4);
-
-        CreateLog(comment, resourcesChanged);
+        localPlayerInventory.resurs5 += changes.resurs5;
+        localPlayerInventory.gold += changes.gold;
+        if (online)
+        {
+            changesPlayerInventory.resurs1 += changes.resurs1;
+            changesPlayerInventory.resurs2 += changes.resurs2;
+            changesPlayerInventory.resurs3 += changes.resurs3;
+            changesPlayerInventory.resurs4 += changes.resurs4;
+            changesPlayerInventory.resurs5 += changes.resurs5;
+            changesPlayerInventory.gold += changes.gold;
+            if (changes.resurs1 != 0) resourcesChanged.Add(add_resurs1, changes.resurs1);
+            if (changes.resurs2 != 0) resourcesChanged.Add(add_resurs2, changes.resurs2);
+            if (changes.resurs3 != 0) resourcesChanged.Add(add_resurs3, changes.resurs3);
+            if (changes.resurs4 != 0) resourcesChanged.Add(add_resurs4, changes.resurs4);
+            if (changes.resurs5 != 0) resourcesChanged.Add(add_resurs5, changes.resurs5);
+            if (changes.gold != 0) resourcesChanged.Add(add_gold, changes.gold);
+            CreateLog(comment, resourcesChanged);
+        }
     }
     public PlayerInventory GetLocalInventory()
     {
         return localPlayerInventory;
-    }//Получить локальный инвентарь
+    } //Получить локальный инвентарь
 
-    private void CreateLog(string comment, Dictionary<string, int> resourcesThatChanged)//Создание лога
+    private void CreateLog(string comment, Dictionary<string, int> resourcesThatChanged)//Создание лога 
     {
         Log log = new Log()
         {
@@ -95,7 +112,7 @@ public class Inventory : MonoBehaviour
         };
         Logs.Add(log);
     }
-    private void CheckCorrect(PlayerInventory inventoryOnServer)//Проверка совпадения локальных данных и данных сервера
+    private void CheckCorrect(PlayerInventory inventoryOnServer)//Проверка совпадения локальных данных и данных сервера 
     {
         PlayerInventory correctPlayerInventory = new PlayerInventory()
         {
@@ -103,6 +120,8 @@ public class Inventory : MonoBehaviour
             resurs2 = inventoryOnServer.resurs2 + changesPlayerInventory.resurs2,
             resurs3 = inventoryOnServer.resurs3 + changesPlayerInventory.resurs3,
             resurs4 = inventoryOnServer.resurs4 + changesPlayerInventory.resurs4,
+            resurs5 = inventoryOnServer.resurs5 + changesPlayerInventory.resurs5,
+            gold = inventoryOnServer.gold + changesPlayerInventory.gold,
         };//Получение корректных значений
         changesPlayerInventory = new PlayerInventory()
         {
@@ -110,6 +129,8 @@ public class Inventory : MonoBehaviour
             resurs2 = 0,
             resurs3 = 0,
             resurs4 = 0,
+            resurs5 = 0,
+            gold = 0,
         };//Удаление изменений
         string s1 = JsonUtility.ToJson(correctPlayerInventory);
         string s2 = JsonUtility.ToJson(localPlayerInventory);
@@ -122,7 +143,7 @@ public class Inventory : MonoBehaviour
     }
 
     //---------------------Работа с сервером---------------------\\
-    static async void GetInventoryFromServer(Inventory self)//Получение инвентаря игрока с сервера
+    static async void GetInventoryFromServer(Inventory self)//Получение инвентаря игрока с сервера 
     {
         try
         {
@@ -146,7 +167,7 @@ public class Inventory : MonoBehaviour
             Debug.Log($"An error occurred: {ex.Message}");
         }
     }
-    static async void SetInventoryOnServer(string playerName, PlayerInventory newInventory)//Обновление инвентаря игрока на сервера
+    static async void SetInventoryOnServer(string playerName, PlayerInventory newInventory)//Обновление инвентаря игрока на сервере 
     {
         string requestUrl = $"https://2025.nti-gamedev.ru/api/games/d5ebfca3-ee6d-485f-9a9b-a53809bfcb62/players/{playerName}/";
 
@@ -169,7 +190,7 @@ public class Inventory : MonoBehaviour
             Debug.Log($"An error occurred: {ex.Message}");
         }
     }
-    static async void PostLogOnServer(Log log)//Обновление инвентаря игрока на сервера
+    static async void PostLogOnServer(Log log)//Отправка лога на сервер 
     {
         string requestUrl = $"https://2025.nti-gamedev.ru/api/games/d5ebfca3-ee6d-485f-9a9b-a53809bfcb62/logs/";
 
@@ -197,10 +218,11 @@ public class Inventory : MonoBehaviour
     void Start()
     {
         playerName = PlayerPrefs.GetString("Name");
+        online = PlayerPrefs.GetInt("Online") == 1;
         GetInventoryFromServer(this);
         StartCoroutine(Synchronization());
     }
-    private IEnumerator Synchronization()//Синхронизация с сервером
+    private IEnumerator Synchronization()//Синхронизация с сервером 
     {
         while (true)
         {

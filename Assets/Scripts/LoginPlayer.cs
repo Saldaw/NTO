@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Net.Http;
 using TMPro;
+using Unity.VisualScripting;
 
 public class LoginPlayer : MonoBehaviour
 {
@@ -15,13 +16,16 @@ public class LoginPlayer : MonoBehaviour
     [SerializeField] private GameObject registerMenu;
     [SerializeField] private GameObject loginMenu;
     [SerializeField] private Button button;
+    [SerializeField] private GameObject offlineMenu;
     //-----------------------------------------------------------\\
-    [Serializable] public class Player//Класс пустого игрока
+    [Serializable] public class Player//Класс пустого игрока 
     {
         public string name;
     }
     void Start()
     {
+        PlayerPrefs.SetInt("Online", 1);
+        PlayerPrefs.Save();
         string name = PlayerPrefs.GetString("Name");
         if (name != "")
         {
@@ -35,14 +39,14 @@ public class LoginPlayer : MonoBehaviour
         }
     }
 
-    public void DeliteAll() //Временная функция
+    public void DeliteAll() //Временная функция 
     {
         PlayerPrefs.DeleteAll();
         UnityEngine.Application.Quit();
     }
 
     //---------------------Работа с сервером---------------------\\
-    static async void CheckNameOnServer(string username,bool isRegister, LoginPlayer self)//Проверяет существование пользователя на сервере
+    static async void CheckNameOnServer(string username,bool isRegister, LoginPlayer self)//Проверяет существование пользователя на сервере 
     {
         try
         {
@@ -79,9 +83,10 @@ public class LoginPlayer : MonoBehaviour
         {
             self.statusText.text = "Ошибка";
             Debug.Log($"An error occurred: {ex.Message}");
+            self.offlineMenu.SetActive(true);
         }
     }
-    static async void Register(LoginPlayer self)//Регистрация нового пользователя
+    static async void Register(LoginPlayer self)//Регистрация нового пользователя 
     {
         string requestUrl = "https://2025.nti-gamedev.ru/api/games/d5ebfca3-ee6d-485f-9a9b-a53809bfcb62/players/";
 
@@ -98,26 +103,27 @@ public class LoginPlayer : MonoBehaviour
             if (!response.IsSuccessStatusCode)
             {
                 self.statusText.text = "Ошибка";
-                self.registerMenu.SetActive(true);
+                self.offlineMenu.SetActive(true);
             }
             else
             {
                 PlayerPrefs.SetString("Name", self.inputField.text);
                 PlayerPrefs.Save();
+                self.AddComponent<ShopCreator>();
                 self.gameObject.SetActive(false);
             }
         }
         catch (Exception ex)
         {
             self.statusText.text = "Ошибка";
-            self.registerMenu.SetActive(true);
+            self.offlineMenu.SetActive(true);
             Debug.Log($"An error occurred: {ex.Message}");
         }
     }
     //-----------------------------------------------------------\\
 
     //---------------------Оброботчик кнопок---------------------\\
-    public void CheckName()//Проверяет поле ввода
+    public void CheckName()//Проверяет поле ввода 
     {
         if (inputField.text == "")
         {
@@ -134,13 +140,14 @@ public class LoginPlayer : MonoBehaviour
         PlayerPrefs.Save();
         this.gameObject.SetActive(false);
     }
-    public void Back()//Вернуться к регестрации
+    public void Back()//Вернуться к регестрации 
     {
         loginMenu.SetActive(false);
+        offlineMenu.SetActive(false);
         statusText.text = "Регистрация";
         registerMenu.SetActive(true);
     }
-    public void ButtonClick()//Регестрирует пользователя по нажатию кнопки
+    public void ButtonClick()//Регестрирует пользователя по нажатию кнопки 
     {
         if (inputField.text != "")
         {
@@ -148,6 +155,12 @@ public class LoginPlayer : MonoBehaviour
             statusText.text = "Получение данных";
             CheckNameOnServer(inputField.text, true, this);
         }
+    }
+    public void StartOffline()//Начать игру без интернета 
+    {
+        PlayerPrefs.SetInt("Online", 0);
+        PlayerPrefs.Save();
+        this.gameObject.SetActive(false);
     }
     //-----------------------------------------------------------\\
 }
