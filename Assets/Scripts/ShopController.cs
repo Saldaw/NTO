@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
+using UnityEditor.PackageManager;
 using UnityEditor.VersionControl;
 using UnityEngine;
 
@@ -68,6 +69,7 @@ public class ShopController : MonoBehaviour
     //---------------------------Ссылки--------------------------\\
     [SerializeField] private ShopUI shopUI;
     [SerializeField] private Inventory playerInventory;
+    [SerializeField] private ConnectionErrorUI errorUI;
     //-----------------------------------------------------------\\
     
     void Start()
@@ -78,7 +80,7 @@ public class ShopController : MonoBehaviour
 
     public Shop GetShop(string shopName)//Получение магазина 
     {
-        Debug.Log(online);
+
         if (online)
         {
             GetShopFromServer(this, shopName);
@@ -182,7 +184,7 @@ public class ShopController : MonoBehaviour
             shop_name = shopName,
             resources_changed = resourcesThatChanged
         };
-        PostLogOnServer(log);
+        PostLogOnServer(this,log);
     }
 
     //---------------------Работа с сервером---------------------\\
@@ -225,15 +227,17 @@ public class ShopController : MonoBehaviour
 
             if (!response.IsSuccessStatusCode)
             {
+                self.errorUI.AddError(content, url);
                 Debug.Log("Error while receiving data.");
             }
         }
         catch (Exception ex)
         {
+            self.errorUI.AddError(content, url);
             Debug.Log($"An error occurred: {ex.Message}");
         }
     }
-    static async void PostLogOnServer(Log log)//Отправка лога на сервер 
+    static async void PostLogOnServer(ShopController self, Log log)//Отправка лога на сервер 
     {
         string requestUrl = $"https://2025.nti-gamedev.ru/api/games/d5ebfca3-ee6d-485f-9a9b-a53809bfcb62/logs/";
 
@@ -248,11 +252,13 @@ public class ShopController : MonoBehaviour
 
             if (!response.IsSuccessStatusCode)
             {
+                self.errorUI.AddError(content, requestUrl);
                 Debug.Log("Synchronization error");
             }
         }
         catch (Exception ex)
         {
+            self.errorUI.AddError(content, requestUrl);
             Debug.Log($"An error occurred: {ex.Message}");
         }
     }

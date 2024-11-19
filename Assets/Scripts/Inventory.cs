@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Newtonsoft.Json;
 using UnityEngine.UI;
+using UnityEditor.PackageManager;
 
 public class Inventory : MonoBehaviour
 {
@@ -48,7 +49,7 @@ public class Inventory : MonoBehaviour
     }
     //-----------------------------------------------------------\\
     private List<Log> Logs = new List<Log>();
-
+    [SerializeField] private ConnectionErrorUI errorUI;
     //--------------------------Инвентарь--------------------------\\
     private PlayerInventory localPlayerInventory = new PlayerInventory
     {
@@ -139,7 +140,7 @@ public class Inventory : MonoBehaviour
             Debug.Log("The value on the local machine is different from the server value!");
             localPlayerInventory = (PlayerInventory)correctPlayerInventory.Clone();
         }
-        SetInventoryOnServer(playerName, correctPlayerInventory);
+        SetInventoryOnServer(this, playerName, correctPlayerInventory);
     }
 
     //---------------------Работа с сервером---------------------\\
@@ -167,7 +168,7 @@ public class Inventory : MonoBehaviour
             Debug.Log($"An error occurred: {ex.Message}");
         }
     }
-    static async void SetInventoryOnServer(string playerName, PlayerInventory newInventory)//Обновление инвентаря игрока на сервере 
+    static async void SetInventoryOnServer(Inventory self, string playerName, PlayerInventory newInventory)//Обновление инвентаря игрока на сервере 
     {
         string requestUrl = $"https://2025.nti-gamedev.ru/api/games/d5ebfca3-ee6d-485f-9a9b-a53809bfcb62/players/{playerName}/";
 
@@ -182,15 +183,17 @@ public class Inventory : MonoBehaviour
 
             if (!response.IsSuccessStatusCode)
             {
+                self.errorUI.AddError(content, requestUrl);
                 Debug.Log("Synchronization error");
             }
         }
         catch (Exception ex)
         {
+            self.errorUI.AddError(content, requestUrl);
             Debug.Log($"An error occurred: {ex.Message}");
         }
     }
-    static async void PostLogOnServer(Log log)//Отправка лога на сервер 
+    static async void PostLogOnServer(Inventory self, Log log)//Отправка лога на сервер 
     {
         string requestUrl = $"https://2025.nti-gamedev.ru/api/games/d5ebfca3-ee6d-485f-9a9b-a53809bfcb62/logs/";
 
@@ -205,11 +208,13 @@ public class Inventory : MonoBehaviour
 
             if (!response.IsSuccessStatusCode)
             {
+                self.errorUI.AddError(content, requestUrl);
                 Debug.Log("Synchronization error");
             }
         }
         catch (Exception ex)
         {
+            self.errorUI.AddError(content, requestUrl);
             Debug.Log($"An error occurred: {ex.Message}");
         }
     }
@@ -231,7 +236,7 @@ public class Inventory : MonoBehaviour
                 GetInventoryFromServer(this);
                 for (int i = 0; i < Logs.Count; i++)
                 {
-                    PostLogOnServer(Logs[i]);
+                    PostLogOnServer(this, Logs[i]);
                 }
                 Logs.Clear();
             }
