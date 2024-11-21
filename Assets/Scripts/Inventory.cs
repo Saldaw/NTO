@@ -199,7 +199,6 @@ public class Inventory : MonoBehaviour
 
         HttpClient httpClient = new HttpClient();
         string logJson = JsonConvert.SerializeObject(log);
-        Debug.Log(logJson);
         var content = new StringContent(logJson, System.Text.Encoding.UTF8, "application/json");
 
         try

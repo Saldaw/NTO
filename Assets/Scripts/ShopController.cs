@@ -74,13 +74,14 @@ public class ShopController : MonoBehaviour
     
     void Start()
     {
-        playerName = PlayerPrefs.GetString("Name");
-        online = PlayerPrefs.GetInt("Online") == 1;
+        
+
     }
 
     public Shop GetShop(string shopName)//Получение магазина 
     {
-
+        playerName = PlayerPrefs.GetString("Name");
+        online = PlayerPrefs.GetInt("Online") == 1;
         if (online)
         {
             GetShopFromServer(this, shopName);
@@ -128,29 +129,29 @@ public class ShopController : MonoBehaviour
             ChangeShopResurs(shopName, new ShopResources() { Resurse5 = buyingResonrces.Resurse5 });
         }
 
-        else if(buyingResonrces.Resurse1.count < 0 && inventory.resurs1 >= buyingResonrces.Resurse1.count)
+        else if(buyingResonrces.Resurse1.count < 0 && inventory.resurs1 >= -buyingResonrces.Resurse1.count)
         {
-            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { gold = buyingResonrces.Resurse1.count * buyingResonrces.Resurse1.cost, resurs1 = - buyingResonrces.Resurse1.count }, selling_resurs1);
+            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { gold = buyingResonrces.Resurse1.count * -buyingResonrces.Resurse1.cost, resurs1 = buyingResonrces.Resurse1.count }, selling_resurs1);
             ChangeShopResurs(shopName, new ShopResources() { Resurse1 = buyingResonrces.Resurse1 });
         }
-        else if (buyingResonrces.Resurse2.count < 0 && inventory.resurs2 >= buyingResonrces.Resurse2.count)
+        else if (buyingResonrces.Resurse2.count < 0 && inventory.resurs2 >= -buyingResonrces.Resurse2.count)
         {
-            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { gold = buyingResonrces.Resurse2.count * buyingResonrces.Resurse2.cost, resurs2 = -buyingResonrces.Resurse2.count }, selling_resurs2);
+            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { gold = buyingResonrces.Resurse2.count * -buyingResonrces.Resurse2.cost, resurs2 = buyingResonrces.Resurse2.count }, selling_resurs2);
             ChangeShopResurs(shopName, new ShopResources() { Resurse2 = buyingResonrces.Resurse2 });
         }
-        else if (buyingResonrces.Resurse3.count < 0 && inventory.resurs3 >= buyingResonrces.Resurse3.count)
+        else if (buyingResonrces.Resurse3.count < 0 && inventory.resurs3 >= -buyingResonrces.Resurse3.count)
         {
-            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { gold = buyingResonrces.Resurse3.count * buyingResonrces.Resurse3.cost, resurs3 = -buyingResonrces.Resurse3.count }, selling_resurs3);
+            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { gold = buyingResonrces.Resurse3.count * -buyingResonrces.Resurse3.cost, resurs3 = buyingResonrces.Resurse3.count }, selling_resurs3);
             ChangeShopResurs(shopName, new ShopResources() { Resurse3 = buyingResonrces.Resurse3 });
         }
-        else if (buyingResonrces.Resurse4.count < 0 && inventory.resurs4 >= buyingResonrces.Resurse4.count)
+        else if (buyingResonrces.Resurse4.count < 0 && inventory.resurs4 >= -buyingResonrces.Resurse4.count)
         {
-            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { gold = buyingResonrces.Resurse4.count * buyingResonrces.Resurse4.cost, resurs4 = -buyingResonrces.Resurse4.count }, selling_resurs4);
+            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { gold = buyingResonrces.Resurse4.count * -buyingResonrces.Resurse4.cost, resurs4 = buyingResonrces.Resurse4.count }, selling_resurs4);
             ChangeShopResurs(shopName, new ShopResources() { Resurse4 = buyingResonrces.Resurse4 });
         }
-        else if (buyingResonrces.Resurse5.count < 0 && inventory.resurs5 >= buyingResonrces.Resurse5.count)
+        else if (buyingResonrces.Resurse5.count < 0 && inventory.resurs5 >= -buyingResonrces.Resurse5.count)
         {
-            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { gold = buyingResonrces.Resurse5.count * buyingResonrces.Resurse5.cost, resurs5 = -buyingResonrces.Resurse5.count }, selling_resurs5);
+            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { gold = buyingResonrces.Resurse5.count * -buyingResonrces.Resurse5.cost, resurs5 = buyingResonrces.Resurse5.count }, selling_resurs5);
             ChangeShopResurs(shopName, new ShopResources() { Resurse5 = buyingResonrces.Resurse5 });
         }
     }
@@ -201,7 +202,6 @@ public class ShopController : MonoBehaviour
                 string jsonString = await response.Content.ReadAsStringAsync();
                 self.shopFromServer = JsonUtility.FromJson<Shop>(jsonString);
                 self.shopUI.UpdateInfo(self.shopFromServer);
-                Debug.Log(jsonString);
             }
             else
             {
