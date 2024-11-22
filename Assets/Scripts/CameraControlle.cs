@@ -27,7 +27,10 @@ public class CameraControlle : MonoBehaviour
     private float targetZoom = -19;
     private bool isZooming = false;
 
-    const int ziroCord = 100;
+    private float minZoomPlanet = -25;
+    private float maxZoom = 5;
+
+    const int ziroCord = 200;
 
     private Vector2 previousMousePosition;
     // Start is called before the first frame update
@@ -52,7 +55,7 @@ public class CameraControlle : MonoBehaviour
             }
             float mw = Input.GetAxis("Mouse ScrollWheel");
             if (mw != 0)
-                targetZoom += mw * wheel_speed*Time.deltaTime*1000;
+                if (targetZoom + mw * wheel_speed * Time.deltaTime * 1000 > minZoomPlanet) targetZoom += mw * wheel_speed * Time.deltaTime * 1000; else targetZoom = minZoomPlanet;
                 isZooming = true;
             if (isZooming) UpdateZooming();
         }
@@ -65,8 +68,8 @@ public class CameraControlle : MonoBehaviour
             if (previousMousePosition.y / Screen.height < 0.1f) MoveCamera(0, -1);
             float mw = Input.GetAxis("Mouse ScrollWheel");
             if (mw != 0)
-                targetZoom -= mw * wheel_speed * Time.deltaTime * 300;
-            isZooming = true;
+                if(targetZoom - mw * wheel_speed * Time.deltaTime * 300>maxZoom)targetZoom -= mw * wheel_speed * Time.deltaTime * 300;else targetZoom = maxZoom;
+                isZooming = true;
             if (isZooming) UpdateZoomingPlanet();
         }
     }
@@ -81,6 +84,10 @@ public class CameraControlle : MonoBehaviour
     }
     private void MoveCamera(int x, int y)
     {
+        if(cameraMain.transform.position.x + x * movingSpead * Time.deltaTime * cameraMainCamera.transform.localPosition.y / 10>ziroCord+mapScale/2)cameraMain.transform.position = new Vector3(cameraMain.transform.position.x + x * movingSpead * Time.deltaTime * cameraMainCamera.transform.localPosition.y / 10-mapScale, 0, cameraMain.transform.position.z + y * movingSpead * Time.deltaTime * cameraMainCamera.transform.localPosition.y / 10);
+        else if (cameraMain.transform.position.x + x * movingSpead * Time.deltaTime * cameraMainCamera.transform.localPosition.y / 10 < ziroCord - mapScale / 2) cameraMain.transform.position = new Vector3(cameraMain.transform.position.x + x * movingSpead * Time.deltaTime * cameraMainCamera.transform.localPosition.y / 10 + mapScale, 0, cameraMain.transform.position.z + y * movingSpead * Time.deltaTime * cameraMainCamera.transform.localPosition.y / 10);
+        if (cameraMain.transform.position.z + y * movingSpead * Time.deltaTime* cameraMainCamera.transform.localPosition.y / 10 > ziroCord + mapScale / 2) cameraMain.transform.position = new Vector3(cameraMain.transform.position.x + x * movingSpead * Time.deltaTime * cameraMainCamera.transform.localPosition.y / 10, 0, cameraMain.transform.position.z + y * movingSpead * Time.deltaTime * cameraMainCamera.transform.localPosition.y / 10- mapScale);
+        else if (cameraMain.transform.position.z + y * movingSpead * Time.deltaTime * cameraMainCamera.transform.localPosition.y / 10 < ziroCord - mapScale / 2) cameraMain.transform.position = new Vector3(cameraMain.transform.position.x + x * movingSpead * Time.deltaTime * cameraMainCamera.transform.localPosition.y / 10, 0, cameraMain.transform.position.z + y * movingSpead * Time.deltaTime * cameraMainCamera.transform.localPosition.y / 10+ mapScale);
         cameraMain.transform.position = new Vector3(cameraMain.transform.position.x + x*movingSpead*Time.deltaTime*cameraMainCamera.transform.localPosition.y/10, 0, cameraMain.transform.position.z + y * movingSpead * Time.deltaTime* cameraMainCamera.transform.localPosition.y / 10);
     }
     private void RotatePlanetX(float x)
@@ -96,9 +103,10 @@ public class CameraControlle : MonoBehaviour
             if (Planet.transform.eulerAngles.y > 180) mainCameraPosition.x = ziroCord + mapScale / 2 * -(360 - Planet.transform.eulerAngles.y) / 180;
             else mainCameraPosition.x = ziroCord + mapScale / 2 * Planet.transform.eulerAngles.y / 180;
             mainCameraPosition.y = ziroCord + mapScale / 2 * Mathf.Sin(Mathf.PI / 180f * cameraPlanet.transform.eulerAngles.x);
+            cameraMainCamera.transform.localPosition = new Vector3(0, changeModePlanet - 1, 0);
             cameraMain.transform.position = new Vector3(mainCameraPosition.x, 0, mainCameraPosition.y);
             PlanetVive.SetActive(cameraPlanetMode);
-            targetZoom = 0;
+            targetZoom = 5;
         }
         
         
@@ -107,7 +115,8 @@ public class CameraControlle : MonoBehaviour
     {
         cameraPlanetMode = !cameraPlanetMode;
         cameraPlanet.transform.eulerAngles = new Vector3(Mathf.Asin((cameraMain.transform.position.z - ziroCord)/(mapScale/2)) * 180 / Mathf.PI, -90, 0);
-        targetZoom = -20;
+        targetZoom = -15;
+        cameraPlanetCamera.transform.localPosition = new Vector3(0, 0, changeMode-1);
         Planet.transform.eulerAngles = new Vector3(0, 0, 0);
         Planet.transform.Rotate(0, 360 / mapScale * (cameraMain.transform.position.x-ziroCord), 0);
         PlanetVive.SetActive(cameraPlanetMode);

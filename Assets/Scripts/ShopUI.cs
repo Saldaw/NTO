@@ -77,7 +77,7 @@ public class ShopUI : MonoBehaviour
 
         
     }
-    // Start is called before the first frame update
+
     public void Open(string shopName)
     {
         Shop shop = shopCR.GetShop(shopName);
@@ -160,7 +160,7 @@ public class ShopUI : MonoBehaviour
                 countResoursInPlayer = playerInventory.GetLocalInventory().resurs5;
                 break;
         }
-        counterMenuCountText.text = "0";
+        counterMenuPriceText.text = "";
         countInCounter = 0;
         counterMenuCountText.text = countInCounter.ToString();
         if (isBuing) counterMenuMainText.text = buingText; else counterMenuMainText.text = sellingText;
@@ -231,11 +231,7 @@ public class ShopUI : MonoBehaviour
             }
             shopCR.BuyResourse(shopResources, shopNow.name);
         }
+        UpdateInfo(shopNow);
         counterMenu.SetActive(false);
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
