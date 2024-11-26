@@ -30,7 +30,7 @@ public class CameraControlle : MonoBehaviour
     private float minZoomPlanet = -25;
     private float maxZoom = 5;
 
-    const int ziroCord = 200;
+    const int ziroCord = 1500;
 
     private Vector2 previousMousePosition;
     // Start is called before the first frame update
@@ -55,7 +55,7 @@ public class CameraControlle : MonoBehaviour
             }
             float mw = Input.GetAxis("Mouse ScrollWheel");
             if (mw != 0)
-                if (targetZoom + mw * wheel_speed * Time.deltaTime * 1000 > minZoomPlanet) targetZoom += mw * wheel_speed * Time.deltaTime * 1000; else targetZoom = minZoomPlanet;
+                if (targetZoom + mw * wheel_speed * Time.deltaTime * 300 > minZoomPlanet) targetZoom += mw * wheel_speed * Time.deltaTime * 300; else targetZoom = minZoomPlanet;
                 isZooming = true;
             if (isZooming) UpdateZooming();
         }
@@ -102,11 +102,14 @@ public class CameraControlle : MonoBehaviour
             cameraPlanetMode = !cameraPlanetMode;
             if (Planet.transform.eulerAngles.y > 180) mainCameraPosition.x = ziroCord + mapScale / 2 * -(360 - Planet.transform.eulerAngles.y) / 180;
             else mainCameraPosition.x = ziroCord + mapScale / 2 * Planet.transform.eulerAngles.y / 180;
-            mainCameraPosition.y = ziroCord + mapScale / 2 * Mathf.Sin(Mathf.PI / 180f * cameraPlanet.transform.eulerAngles.x);
+
+            if (cameraPlanet.transform.eulerAngles.x<90) mainCameraPosition.y = ziroCord + mapScale / 2 * (cameraPlanet.transform.eulerAngles.x / 90f);
+            else mainCameraPosition.y = ziroCord + mapScale / 2 * ((cameraPlanet.transform.eulerAngles.x-360f) / 90f);
+
             cameraMainCamera.transform.localPosition = new Vector3(0, changeModePlanet - 1, 0);
             cameraMain.transform.position = new Vector3(mainCameraPosition.x, 0, mainCameraPosition.y);
             PlanetVive.SetActive(cameraPlanetMode);
-            targetZoom = 5;
+            targetZoom = 60;
         }
         
         
@@ -114,11 +117,12 @@ public class CameraControlle : MonoBehaviour
     void ChangeModPlanet()
     {
         cameraPlanetMode = !cameraPlanetMode;
-        cameraPlanet.transform.eulerAngles = new Vector3(Mathf.Asin((cameraMain.transform.position.z - ziroCord)/(mapScale/2)) * 180 / Mathf.PI, -90, 0);
+        cameraPlanet.transform.eulerAngles = new Vector3(0, 0, 0);
+        cameraPlanet.transform.Rotate((cameraMain.transform.position.z - ziroCord) / (mapScale / 2)*90f, -90,0);
         targetZoom = -15;
         cameraPlanetCamera.transform.localPosition = new Vector3(0, 0, changeMode-1);
         Planet.transform.eulerAngles = new Vector3(0, 0, 0);
-        Planet.transform.Rotate(0, 360 / mapScale * (cameraMain.transform.position.x-ziroCord), 0);
+        Planet.transform.Rotate(0, 360f / mapScale * (cameraMain.transform.position.x-ziroCord), 0);
         PlanetVive.SetActive(cameraPlanetMode);
     }
     void UpdateZooming()

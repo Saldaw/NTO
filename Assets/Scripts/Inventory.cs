@@ -12,24 +12,24 @@ using UnityEditor.PackageManager;
 public class Inventory : MonoBehaviour
 {
     //----------------------Название в логах---------------------\\
-    const string add_resurs1 = "add_resurs1";
-    const string add_resurs2 = "add_resurs2";
-    const string add_resurs3 = "add_resurs3";
-    const string add_resurs4 = "add_resurs4";
-    const string add_resurs5 = "add_resurs4";
-    const string add_gold = "add_gold";
+    const string add_food = "add_food";
+    const string add_materials = "add_materials";
+    const string add_electronics = "add_electronics";
+    const string add_weapons = "add_weapons";
+    const string add_energyhoney = "add_weapons";
+    const string add_goldhoney = "add_goldhoney";
     //-----------------------------------------------------------\\
     private string playerName;
     private bool online;
     //--------------------------Классы--------------------------\\
     [Serializable] public class PlayerInventory : ICloneable
     {
-        public int resurs1;
-        public int resurs2;
-        public int resurs3;
-        public int resurs4;
-        public int resurs5;
-        public int gold;
+        public int food = 0;
+        public int materials = 0;
+        public int electronics = 0;
+        public int weapons = 0;
+        public int energyhoney = 0;
+        public int goldhoney = 0;
 
         public object Clone()
         {
@@ -53,21 +53,21 @@ public class Inventory : MonoBehaviour
     //--------------------------Инвентарь--------------------------\\
     private PlayerInventory localPlayerInventory = new PlayerInventory
     {
-        resurs1 = 0,
-        resurs2 = 0,
-        resurs3 = 0,
-        resurs4 = 0,
-        resurs5 = 0,
-        gold = 0,
+        food = 0,
+        materials = 0,
+        electronics = 0,
+        weapons = 0,
+        energyhoney = 0,
+        goldhoney = 0,
     };
     private PlayerInventory changesPlayerInventory = new PlayerInventory
     {
-        resurs1 = 0,
-        resurs2 = 0,
-        resurs3 = 0,
-        resurs4 = 0,
-        resurs5 = 0,
-        gold = 0,
+        food = 0,
+        materials = 0,
+        electronics = 0,
+        weapons = 0,
+        energyhoney = 0,
+        goldhoney = 0,
     };
     //-----------------------------------------------------------\\
     
@@ -75,26 +75,26 @@ public class Inventory : MonoBehaviour
     {
         Dictionary<string, int> resourcesChanged = new Dictionary<string, int>();
 
-        localPlayerInventory.resurs1 += changes.resurs1;
-        localPlayerInventory.resurs2 += changes.resurs2;
-        localPlayerInventory.resurs3 += changes.resurs3;
-        localPlayerInventory.resurs4 += changes.resurs4;
-        localPlayerInventory.resurs5 += changes.resurs5;
-        localPlayerInventory.gold += changes.gold;
+        localPlayerInventory.food += changes.food;
+        localPlayerInventory.materials += changes.materials;
+        localPlayerInventory.electronics += changes.electronics;
+        localPlayerInventory.weapons += changes.weapons;
+        localPlayerInventory.energyhoney += changes.energyhoney;
+        localPlayerInventory.goldhoney += changes.goldhoney;
         if (online)
         {
-            changesPlayerInventory.resurs1 += changes.resurs1;
-            changesPlayerInventory.resurs2 += changes.resurs2;
-            changesPlayerInventory.resurs3 += changes.resurs3;
-            changesPlayerInventory.resurs4 += changes.resurs4;
-            changesPlayerInventory.resurs5 += changes.resurs5;
-            changesPlayerInventory.gold += changes.gold;
-            if (changes.resurs1 != 0) resourcesChanged.Add(add_resurs1, changes.resurs1);
-            if (changes.resurs2 != 0) resourcesChanged.Add(add_resurs2, changes.resurs2);
-            if (changes.resurs3 != 0) resourcesChanged.Add(add_resurs3, changes.resurs3);
-            if (changes.resurs4 != 0) resourcesChanged.Add(add_resurs4, changes.resurs4);
-            if (changes.resurs5 != 0) resourcesChanged.Add(add_resurs5, changes.resurs5);
-            if (changes.gold != 0) resourcesChanged.Add(add_gold, changes.gold);
+            changesPlayerInventory.food += changes.food;
+            changesPlayerInventory.materials += changes.materials;
+            changesPlayerInventory.electronics += changes.electronics;
+            changesPlayerInventory.weapons += changes.weapons;
+            changesPlayerInventory.energyhoney += changes.energyhoney;
+            changesPlayerInventory.goldhoney += changes.goldhoney;
+            if (changes.food != 0) resourcesChanged.Add(add_food, changes.food);
+            if (changes.materials != 0) resourcesChanged.Add(add_materials, changes.materials);
+            if (changes.electronics != 0) resourcesChanged.Add(add_electronics, changes.electronics);
+            if (changes.weapons != 0) resourcesChanged.Add(add_weapons, changes.weapons);
+            if (changes.energyhoney != 0) resourcesChanged.Add(add_energyhoney, changes.energyhoney);
+            if (changes.goldhoney != 0) resourcesChanged.Add(add_goldhoney, changes.goldhoney);
             CreateLog(comment, resourcesChanged);
         }
     }
@@ -117,21 +117,21 @@ public class Inventory : MonoBehaviour
     {
         PlayerInventory correctPlayerInventory = new PlayerInventory()
         {
-            resurs1 = inventoryOnServer.resurs1 + changesPlayerInventory.resurs1,
-            resurs2 = inventoryOnServer.resurs2 + changesPlayerInventory.resurs2,
-            resurs3 = inventoryOnServer.resurs3 + changesPlayerInventory.resurs3,
-            resurs4 = inventoryOnServer.resurs4 + changesPlayerInventory.resurs4,
-            resurs5 = inventoryOnServer.resurs5 + changesPlayerInventory.resurs5,
-            gold = inventoryOnServer.gold + changesPlayerInventory.gold,
+            food = inventoryOnServer.food + changesPlayerInventory.food,
+            materials = inventoryOnServer.materials + changesPlayerInventory.materials,
+            electronics = inventoryOnServer.electronics + changesPlayerInventory.electronics,
+            weapons = inventoryOnServer.weapons + changesPlayerInventory.weapons,
+            energyhoney = inventoryOnServer.energyhoney + changesPlayerInventory.energyhoney,
+            goldhoney = inventoryOnServer.goldhoney + changesPlayerInventory.goldhoney,
         };//Получение корректных значений
         changesPlayerInventory = new PlayerInventory()
         {
-            resurs1 = 0,
-            resurs2 = 0,
-            resurs3 = 0,
-            resurs4 = 0,
-            resurs5 = 0,
-            gold = 0,
+            food = 0,
+            materials = 0,
+            electronics = 0,
+            weapons = 0,
+            energyhoney = 0,
+            goldhoney = 0,
         };//Удаление изменений
         string s1 = JsonUtility.ToJson(correctPlayerInventory);
         string s2 = JsonUtility.ToJson(localPlayerInventory);

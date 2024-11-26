@@ -15,11 +15,11 @@ using UnityEngine.UI;
     }
     [Serializable] public class ShopResources//Класс с ресурсами 
     {
-        public ResourceInShop Resurse1 = new ResourceInShop();
-        public ResourceInShop Resurse2 = new ResourceInShop();
-        public ResourceInShop Resurse3 = new ResourceInShop();
-        public ResourceInShop Resurse4 = new ResourceInShop();
-        public ResourceInShop Resurse5 = new ResourceInShop();
+        public ResourceInShop food = new ResourceInShop();
+        public ResourceInShop materials = new ResourceInShop();
+        public ResourceInShop electronics = new ResourceInShop();
+        public ResourceInShop weapons = new ResourceInShop();
+        public ResourceInShop energyhoney = new ResourceInShop();
     }
     [Serializable] public class ResourceInShop//Класс ресурса 
     {
@@ -35,21 +35,24 @@ public class ShopCreator : MonoBehaviour
     private void Awake()//Создаём магазин при инициализации
     {
         playerName = PlayerPrefs.GetString("Name");
-        CreateShop("testShop");
+        ShopResources shopResurses = new ShopResources() { food = {count = 5, cost = 10 }, electronics = {count = 2, cost = 20 }, energyhoney = {count = 15, cost = 10}, materials = {count = 1, cost = 20 }, weapons = {count = 0, cost = 10}};
+        CreateShop("City1Shop", shopResurses);
+        shopResurses = new ShopResources() { food = { count = 2, cost = 15 }, electronics = { count = 4, cost = 15 }, energyhoney = { count = 15, cost = 10 }, materials = { count = 10, cost = 10 }, weapons = { count = 0, cost = 10 } };
+        CreateShop("City2Shop", shopResurses);
+        shopResurses = new ShopResources() { food = { count = 15, cost = 12 }, electronics = { count = 0, cost = 20 }, energyhoney = { count = 3, cost = 15 }, materials = { count = 3, cost = 15 }, weapons = { count = 0, cost = 10 } };
+        CreateShop("City3Shop", shopResurses);
+        shopResurses = new ShopResources() { food = { count = 5, cost = 10 }, electronics = { count = 5, cost = 10 }, energyhoney = { count = 5, cost = 10 }, materials = { count = 5, cost = 10 }, weapons = { count = 5, cost = 10 } };
+        CreateShop("City4Shop", shopResurses);
+        shopResurses = new ShopResources() { food = { count = 0, cost = 20 }, electronics = { count = 2, cost = 15 }, energyhoney = { count = 0, cost = 5 }, materials = { count = 15, cost = 7 }, weapons = { count = 5, cost = 10 } };
+        CreateShop("City6Shop", shopResurses);
     }
 
     //---------------------Создание Магазина---------------------\\
-    private void CreateShop(string name)//Создать магазин 
+    private void CreateShop(string name, ShopResources shopRes)//Создать магазин 
     {
         Shop shop = new Shop();
         shop.name = name;
-        ShopResources resources = new ShopResources();
-        resources.Resurse1 = new ResourceInShop() { cost = 10, count = 100 };
-        resources.Resurse2 = new ResourceInShop() { cost = 10, count = 100 };
-        resources.Resurse3 = new ResourceInShop() { cost = 10, count = 100 };
-        resources.Resurse4 = new ResourceInShop() { cost = 10, count = 100 };
-        resources.Resurse5 = new ResourceInShop() { cost = 10, count = 100 };
-        shop.resources = resources;
+        shop.resources = shopRes;
         PostShopOnServer(playerName, shop);
     }
     static async void PostShopOnServer(string playerName, Shop shop)//Создать магазин на сервере 

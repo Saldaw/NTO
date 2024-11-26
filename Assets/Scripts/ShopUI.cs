@@ -53,22 +53,22 @@ public class ShopUI : MonoBehaviour
 
     public void UpdateInfo(Shop info)
     {
-        if (info.resources.Resurse1.count > 0) { buttonBuy1.enabled = true; buttonBuy1.image.sprite = imagesForButton[0]; } else { buttonBuy1.enabled = false; buttonBuy1.image.sprite = imagesForButton[1]; }
-        if (info.resources.Resurse2.count > 0) { buttonBuy2.enabled = true; buttonBuy2.image.sprite = imagesForButton[0]; } else { buttonBuy2.enabled = false; buttonBuy2.image.sprite = imagesForButton[1]; }
-        if (info.resources.Resurse3.count > 0) { buttonBuy3.enabled = true; buttonBuy3.image.sprite = imagesForButton[0]; } else { buttonBuy3.enabled = false; buttonBuy3.image.sprite = imagesForButton[1]; }
-        if (info.resources.Resurse4.count > 0) { buttonBuy4.enabled = true; buttonBuy4.image.sprite = imagesForButton[0]; } else { buttonBuy4.enabled = false; buttonBuy4.image.sprite = imagesForButton[1]; }
-        if (info.resources.Resurse5.count > 0) { buttonBuy5.enabled = true; buttonBuy5.image.sprite = imagesForButton[0]; } else { buttonBuy5.enabled = false; buttonBuy5.image.sprite = imagesForButton[1]; }
+        if (info.resources.food.count > 0) { buttonBuy1.enabled = true; buttonBuy1.image.sprite = imagesForButton[0]; } else { buttonBuy1.enabled = false; buttonBuy1.image.sprite = imagesForButton[1]; }
+        if (info.resources.materials.count > 0) { buttonBuy2.enabled = true; buttonBuy2.image.sprite = imagesForButton[0]; } else { buttonBuy2.enabled = false; buttonBuy2.image.sprite = imagesForButton[1]; }
+        if (info.resources.electronics.count > 0) { buttonBuy3.enabled = true; buttonBuy3.image.sprite = imagesForButton[0]; } else { buttonBuy3.enabled = false; buttonBuy3.image.sprite = imagesForButton[1]; }
+        if (info.resources.weapons.count > 0) { buttonBuy4.enabled = true; buttonBuy4.image.sprite = imagesForButton[0]; } else { buttonBuy4.enabled = false; buttonBuy4.image.sprite = imagesForButton[1]; }
+        if (info.resources.energyhoney.count > 0) { buttonBuy5.enabled = true; buttonBuy5.image.sprite = imagesForButton[0]; } else { buttonBuy5.enabled = false; buttonBuy5.image.sprite = imagesForButton[1]; }
 
-        cost1Text.text = info.resources.Resurse1.cost.ToString();
-        count1Text.text = info.resources.Resurse1.count.ToString();
-        cost2Text.text = info.resources.Resurse2.cost.ToString();
-        count2Text.text = info.resources.Resurse2.count.ToString();
-        cost3Text.text = info.resources.Resurse3.cost.ToString();
-        count3Text.text = info.resources.Resurse3.count.ToString();
-        cost4Text.text = info.resources.Resurse4.cost.ToString();
-        count4Text.text = info.resources.Resurse4.count.ToString();
-        cost5Text.text = info.resources.Resurse5.cost.ToString();
-        count5Text.text = info.resources.Resurse5.count.ToString();
+        cost1Text.text = info.resources.food.cost.ToString();
+        count1Text.text = info.resources.food.count.ToString();
+        cost2Text.text = info.resources.materials.cost.ToString();
+        count2Text.text = info.resources.materials.count.ToString();
+        cost3Text.text = info.resources.electronics.cost.ToString();
+        count3Text.text = info.resources.electronics.count.ToString();
+        cost4Text.text = info.resources.weapons.cost.ToString();
+        count4Text.text = info.resources.weapons.count.ToString();
+        cost5Text.text = info.resources.energyhoney.cost.ToString();
+        count5Text.text = info.resources.energyhoney.count.ToString();
         shopNow = info;
         loadingMenu.SetActive(false);
     }
@@ -135,29 +135,29 @@ public class ShopUI : MonoBehaviour
         switch (resoursInCounter)
         {
             case 1:
-                countResoursInCounter = shopNow.resources.Resurse1.count;
-                costInCounter = shopNow.resources.Resurse1.cost;
-                countResoursInPlayer = playerInventory.GetLocalInventory().resurs1;
+                countResoursInCounter = shopNow.resources.food.count;
+                costInCounter = shopNow.resources.food.cost;
+                countResoursInPlayer = playerInventory.GetLocalInventory().food;
                 break;
             case 2:
-                countResoursInCounter = shopNow.resources.Resurse2.count;
-                costInCounter = shopNow.resources.Resurse2.cost;
-                countResoursInPlayer = playerInventory.GetLocalInventory().resurs2;
+                countResoursInCounter = shopNow.resources.materials.count;
+                costInCounter = shopNow.resources.materials.cost;
+                countResoursInPlayer = playerInventory.GetLocalInventory().materials;
                 break;
             case 3:
-                countResoursInCounter = shopNow.resources.Resurse3.count;
-                costInCounter = shopNow.resources.Resurse3.cost;
-                countResoursInPlayer = playerInventory.GetLocalInventory().resurs3;
+                countResoursInCounter = shopNow.resources.electronics.count;
+                costInCounter = shopNow.resources.electronics.cost;
+                countResoursInPlayer = playerInventory.GetLocalInventory().electronics;
                 break;
             case 4:
-                countResoursInCounter = shopNow.resources.Resurse4.count;
-                costInCounter = shopNow.resources.Resurse4.cost;
-                countResoursInPlayer = playerInventory.GetLocalInventory().resurs4;
+                countResoursInCounter = shopNow.resources.weapons.count;
+                costInCounter = shopNow.resources.weapons.cost;
+                countResoursInPlayer = playerInventory.GetLocalInventory().weapons;
                 break;
             case 5:
-                countResoursInCounter = shopNow.resources.Resurse5.count;
-                costInCounter = shopNow.resources.Resurse5.cost;
-                countResoursInPlayer = playerInventory.GetLocalInventory().resurs5;
+                countResoursInCounter = shopNow.resources.energyhoney.count;
+                costInCounter = shopNow.resources.energyhoney.cost;
+                countResoursInPlayer = playerInventory.GetLocalInventory().energyhoney;
                 break;
         }
         counterMenuPriceText.text = "";
@@ -176,7 +176,7 @@ public class ShopUI : MonoBehaviour
             {
                 counterMenuPriceText.text = $"-{summCostInCounter}";
                 counterMenuCountText.text = countInCounter.ToString();
-                if (playerInventory.GetLocalInventory().gold >= summCostInCounter && countResoursInCounter >= countInCounter)
+                if (playerInventory.GetLocalInventory().goldhoney >= summCostInCounter && countResoursInCounter >= countInCounter)
                 {
                     counterButtonBuy.enabled = true;
                 }
@@ -209,24 +209,24 @@ public class ShopUI : MonoBehaviour
             switch (resoursInCounter)
             {
                 case 1:
-                    shopResources.Resurse1.count = countInCounter;
-                    shopResources.Resurse1.cost = costInCounter;
+                    shopResources.food.count = countInCounter;
+                    shopResources.food.cost = costInCounter;
                     break;
                 case 2:
-                    shopResources.Resurse2.count = countInCounter;
-                    shopResources.Resurse2.cost = costInCounter;
+                    shopResources.materials.count = countInCounter;
+                    shopResources.materials.cost = costInCounter;
                     break;
                 case 3:
-                    shopResources.Resurse3.count = countInCounter;
-                    shopResources.Resurse3.cost = costInCounter;
+                    shopResources.electronics.count = countInCounter;
+                    shopResources.electronics.cost = costInCounter;
                     break;
                 case 4:
-                    shopResources.Resurse4.count = countInCounter;
-                    shopResources.Resurse4.cost = costInCounter;
+                    shopResources.weapons.count = countInCounter;
+                    shopResources.weapons.cost = costInCounter;
                     break;
                 case 5:
-                    shopResources.Resurse5.count = countInCounter;
-                    shopResources.Resurse5.cost = costInCounter;
+                    shopResources.energyhoney.count = countInCounter;
+                    shopResources.energyhoney.cost = costInCounter;
                     break;
             }
             shopCR.BuyResourse(shopResources, shopNow.name);

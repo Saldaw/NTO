@@ -10,16 +10,16 @@ using UnityEngine;
 public class ShopController : MonoBehaviour
 {
     //----------------------Название в логах---------------------\\
-    const string buying_resurs1 = "buying_resurs1";
-    const string buying_resurs2 = "buying_resurs2";
-    const string buying_resurs3 = "buying_resurs3";
-    const string buying_resurs4 = "buying_resurs4";
-    const string buying_resurs5 = "buying_resurs5";
-    const string selling_resurs1 = "selling_resurs1";
-    const string selling_resurs2 = "selling_resurs2";
-    const string selling_resurs3 = "selling_resurs3";
-    const string selling_resurs4 = "selling_resurs4";
-    const string selling_resurs5 = "selling_resurs5";
+    const string buying_food = "buying_food";
+    const string buying_materials = "buying_materials";
+    const string buying_electronics = "buying_electronics";
+    const string buying_weapons = "buying_weapons";
+    const string buying_energyhoney = "buying_energyhoney";
+    const string selling_food = "selling_food";
+    const string selling_materials = "selling_materials";
+    const string selling_electronics = "selling_electronics";
+    const string selling_weapons = "selling_weapons";
+    const string selling_energyhoney = "selling_energyhoney";
     //-----------------------------------------------------------\\
 
     private string playerName;
@@ -33,38 +33,66 @@ public class ShopController : MonoBehaviour
         public Dictionary<string,int> resources_changed;
     }
     private Shop shopFromServer;
-    readonly Shop localShop = new Shop()
+    readonly Shop localShop1 = new Shop()
     {
-        name = "Магаз",
+        name = "City1Shop",
         resources = new ShopResources()
         {
-            Resurse1 = new ResourceInShop()
-            {
-                cost = 10,
-                count = 10
-            },
-            Resurse2 = new ResourceInShop()
-            {
-                cost = 10,
-                count = 10
-            },
-            Resurse3 = new ResourceInShop()
-            {
-                cost = 10,
-                count = 10
-            },
-            Resurse4 = new ResourceInShop()
-            {
-                cost = 10,
-                count = 10
-            },
-            Resurse5 = new ResourceInShop()
-            {
-                cost = 10,
-                count = 10
-            }
+            food = { count = 5, cost = 10 },
+            electronics = { count = 2, cost = 20 },
+            energyhoney = { count = 15, cost = 10 },
+            materials = { count = 1, cost = 20 },
+            weapons = { count = 0, cost = 10 }
         }
     }; //Локальный магазин 1
+    readonly Shop localShop2 = new Shop()
+    {
+        name = "City2Shop",
+        resources = new ShopResources()
+        {
+            food = { count = 2, cost = 15 },
+            electronics = { count = 4, cost = 15 },
+            energyhoney = { count = 15, cost = 10 },
+            materials = { count = 10, cost = 10 },
+            weapons = { count = 0, cost = 10 }
+        }
+    }; //Локальный магазин 2
+    readonly Shop localShop3 = new Shop()
+    {
+        name = "City3Shop",
+        resources = new ShopResources()
+        {
+            food = { count = 15, cost = 12 },
+            electronics = { count = 0, cost = 20 },
+            energyhoney = { count = 3, cost = 15 },
+            materials = { count = 3, cost = 15 },
+            weapons = { count = 0, cost = 10 }
+        }
+    }; //Локальный магазин 3
+    readonly Shop localShop4 = new Shop()
+    {
+        name = "City4Shop",
+        resources = new ShopResources()
+        {
+            food = { count = 5, cost = 10 },
+            electronics = { count = 5, cost = 10 },
+            energyhoney = { count = 5, cost = 10 },
+            materials = { count = 5, cost = 10 },
+            weapons = { count = 5, cost = 10 }
+        }
+    }; //Локальный магазин 4
+    readonly Shop localShop6 = new Shop()
+    {
+        name = "City6Shop",
+        resources = new ShopResources()
+        {
+            food = { count = 0, cost = 20 },
+            electronics = { count = 2, cost = 15 },
+            energyhoney = { count = 0, cost = 5 },
+            materials = { count = 15, cost = 7 },
+            weapons = { count = 5, cost = 10 }
+        }
+    }; //Локальный магазин 6
 
     //---------------------------Ссылки--------------------------\\
     [SerializeField] private ShopUI shopUI;
@@ -91,10 +119,23 @@ public class ShopController : MonoBehaviour
         {
             switch (shopName)
             {
-                case "1":
-                    shopFromServer = localShop;
-                    return localShop;
+                case "City1Shop":
+                    shopFromServer = localShop1;
+                    return localShop1;
+                case "City2Shop":
+                    shopFromServer = localShop2;
+                    return localShop2;
+                case "City3Shop":
+                    shopFromServer = localShop3;
+                    return localShop3;
+                case "City4Shop":
+                    shopFromServer = localShop4;
+                    return localShop4;
+                case "City6Shop":
+                    shopFromServer = localShop6;
+                    return localShop6;
                 default: return null;
+
             }
         }
 
@@ -103,56 +144,56 @@ public class ShopController : MonoBehaviour
     {
         Inventory.PlayerInventory inventory = playerInventory.GetLocalInventory();
 
-        if (buyingResonrces.Resurse1.count>0 && inventory.gold - buyingResonrces.Resurse1.count * buyingResonrces.Resurse1.cost >= 0 && shopFromServer.resources.Resurse1.count>= buyingResonrces.Resurse1.count)
+        if (buyingResonrces.food.count>0 && inventory.goldhoney - buyingResonrces.food.count * buyingResonrces.food.cost >= 0 && shopFromServer.resources.food.count>= buyingResonrces.food.count)
         {
-            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { gold = - buyingResonrces.Resurse1.count * buyingResonrces.Resurse1.cost, resurs1 = buyingResonrces.Resurse1.count }, buying_resurs1);
-            ChangeShopResurs(shopName, new ShopResources() { Resurse1 = buyingResonrces.Resurse1 });
+            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { goldhoney = - buyingResonrces.food.count * buyingResonrces.food.cost, food = buyingResonrces.food.count }, buying_food);
+            ChangeShopResurs(shopName, new ShopResources() { food = buyingResonrces.food });
         }
-        else if (buyingResonrces.Resurse2.count > 0 && inventory.gold - buyingResonrces.Resurse2.count * buyingResonrces.Resurse2.cost >= 0 && shopFromServer.resources.Resurse2.count >= buyingResonrces.Resurse2.count)
+        else if (buyingResonrces.materials.count > 0 && inventory.goldhoney - buyingResonrces.materials.count * buyingResonrces.materials.cost >= 0 && shopFromServer.resources.materials.count >= buyingResonrces.materials.count)
         {
-            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { gold = - buyingResonrces.Resurse2.count * buyingResonrces.Resurse2.cost, resurs2 = buyingResonrces.Resurse2.count }, buying_resurs2);
-            ChangeShopResurs(shopName, new ShopResources() { Resurse2 = buyingResonrces.Resurse2 });
+            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { goldhoney = - buyingResonrces.materials.count * buyingResonrces.materials.cost, materials = buyingResonrces.materials.count }, buying_materials);
+            ChangeShopResurs(shopName, new ShopResources() { materials = buyingResonrces.materials });
         }
-        else if(buyingResonrces.Resurse3.count > 0 && inventory.gold - buyingResonrces.Resurse3.count * buyingResonrces.Resurse3.cost >= 0 && shopFromServer.resources.Resurse3.count >= buyingResonrces.Resurse3.count)
+        else if(buyingResonrces.electronics.count > 0 && inventory.goldhoney - buyingResonrces.electronics.count * buyingResonrces.electronics.cost >= 0 && shopFromServer.resources.electronics.count >= buyingResonrces.electronics.count)
         {
-            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { gold = - buyingResonrces.Resurse3.count * buyingResonrces.Resurse3.cost, resurs3 = buyingResonrces.Resurse3.count }, buying_resurs3);
-            ChangeShopResurs(shopName, new ShopResources() { Resurse3 = buyingResonrces.Resurse3 });
+            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { goldhoney = - buyingResonrces.electronics.count * buyingResonrces.electronics.cost, electronics = buyingResonrces.electronics.count }, buying_electronics);
+            ChangeShopResurs(shopName, new ShopResources() { electronics = buyingResonrces.electronics });
         }
-        else if (buyingResonrces.Resurse4.count > 0 && inventory.gold - buyingResonrces.Resurse4.count * buyingResonrces.Resurse4.cost >= 0 && shopFromServer.resources.Resurse4.count >= buyingResonrces.Resurse4.count)
+        else if (buyingResonrces.weapons.count > 0 && inventory.goldhoney - buyingResonrces.weapons.count * buyingResonrces.weapons.cost >= 0 && shopFromServer.resources.weapons.count >= buyingResonrces.weapons.count)
         {
-            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { gold = -buyingResonrces.Resurse4.count * buyingResonrces.Resurse4.cost, resurs4 = buyingResonrces.Resurse4.count }, buying_resurs4);
-            ChangeShopResurs(shopName, new ShopResources() { Resurse4 = buyingResonrces.Resurse4 });
+            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { goldhoney = -buyingResonrces.weapons.count * buyingResonrces.weapons.cost, weapons = buyingResonrces.weapons.count }, buying_weapons);
+            ChangeShopResurs(shopName, new ShopResources() { weapons = buyingResonrces.weapons });
         }
-        else if (buyingResonrces.Resurse5.count > 0 && inventory.gold - buyingResonrces.Resurse5.count * buyingResonrces.Resurse5.cost >= 0 && shopFromServer.resources.Resurse5.count >= buyingResonrces.Resurse5.count)
+        else if (buyingResonrces.energyhoney.count > 0 && inventory.goldhoney - buyingResonrces.energyhoney.count * buyingResonrces.energyhoney.cost >= 0 && shopFromServer.resources.energyhoney.count >= buyingResonrces.energyhoney.count)
         {
-            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { gold = -buyingResonrces.Resurse5.count * buyingResonrces.Resurse5.cost, resurs5 = buyingResonrces.Resurse5.count }, buying_resurs5);
-            ChangeShopResurs(shopName, new ShopResources() { Resurse5 = buyingResonrces.Resurse5 });
+            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { goldhoney = -buyingResonrces.energyhoney.count * buyingResonrces.energyhoney.cost, energyhoney = buyingResonrces.energyhoney.count }, buying_energyhoney);
+            ChangeShopResurs(shopName, new ShopResources() { energyhoney = buyingResonrces.energyhoney });
         }
 
-        else if(buyingResonrces.Resurse1.count < 0 && inventory.resurs1 >= -buyingResonrces.Resurse1.count)
+        else if(buyingResonrces.food.count < 0 && inventory.food >= -buyingResonrces.food.count)
         {
-            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { gold = buyingResonrces.Resurse1.count * -buyingResonrces.Resurse1.cost, resurs1 = buyingResonrces.Resurse1.count }, selling_resurs1);
-            ChangeShopResurs(shopName, new ShopResources() { Resurse1 = buyingResonrces.Resurse1 });
+            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { goldhoney = buyingResonrces.food.count * -buyingResonrces.food.cost, food = buyingResonrces.food.count }, selling_food);
+            ChangeShopResurs(shopName, new ShopResources() { food = buyingResonrces.food });
         }
-        else if (buyingResonrces.Resurse2.count < 0 && inventory.resurs2 >= -buyingResonrces.Resurse2.count)
+        else if (buyingResonrces.materials.count < 0 && inventory.materials >= -buyingResonrces.materials.count)
         {
-            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { gold = buyingResonrces.Resurse2.count * -buyingResonrces.Resurse2.cost, resurs2 = buyingResonrces.Resurse2.count }, selling_resurs2);
-            ChangeShopResurs(shopName, new ShopResources() { Resurse2 = buyingResonrces.Resurse2 });
+            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { goldhoney = buyingResonrces.materials.count * -buyingResonrces.materials.cost, materials = buyingResonrces.materials.count }, selling_materials);
+            ChangeShopResurs(shopName, new ShopResources() { materials = buyingResonrces.materials });
         }
-        else if (buyingResonrces.Resurse3.count < 0 && inventory.resurs3 >= -buyingResonrces.Resurse3.count)
+        else if (buyingResonrces.electronics.count < 0 && inventory.electronics >= -buyingResonrces.electronics.count)
         {
-            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { gold = buyingResonrces.Resurse3.count * -buyingResonrces.Resurse3.cost, resurs3 = buyingResonrces.Resurse3.count }, selling_resurs3);
-            ChangeShopResurs(shopName, new ShopResources() { Resurse3 = buyingResonrces.Resurse3 });
+            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { goldhoney = buyingResonrces.electronics.count * -buyingResonrces.electronics.cost, electronics = buyingResonrces.electronics.count }, selling_electronics);
+            ChangeShopResurs(shopName, new ShopResources() { electronics = buyingResonrces.electronics });
         }
-        else if (buyingResonrces.Resurse4.count < 0 && inventory.resurs4 >= -buyingResonrces.Resurse4.count)
+        else if (buyingResonrces.weapons.count < 0 && inventory.weapons >= -buyingResonrces.weapons.count)
         {
-            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { gold = buyingResonrces.Resurse4.count * -buyingResonrces.Resurse4.cost, resurs4 = buyingResonrces.Resurse4.count }, selling_resurs4);
-            ChangeShopResurs(shopName, new ShopResources() { Resurse4 = buyingResonrces.Resurse4 });
+            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { goldhoney = buyingResonrces.weapons.count * -buyingResonrces.weapons.cost, weapons = buyingResonrces.weapons.count }, selling_weapons);
+            ChangeShopResurs(shopName, new ShopResources() { weapons = buyingResonrces.weapons });
         }
-        else if (buyingResonrces.Resurse5.count < 0 && inventory.resurs5 >= -buyingResonrces.Resurse5.count)
+        else if (buyingResonrces.energyhoney.count < 0 && inventory.energyhoney >= -buyingResonrces.energyhoney.count)
         {
-            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { gold = buyingResonrces.Resurse5.count * -buyingResonrces.Resurse5.cost, resurs5 = buyingResonrces.Resurse5.count }, selling_resurs5);
-            ChangeShopResurs(shopName, new ShopResources() { Resurse5 = buyingResonrces.Resurse5 });
+            playerInventory.ChangeResurs(new Inventory.PlayerInventory() { goldhoney = buyingResonrces.energyhoney.count * -buyingResonrces.energyhoney.cost, energyhoney = buyingResonrces.energyhoney.count }, selling_energyhoney);
+            ChangeShopResurs(shopName, new ShopResources() { energyhoney = buyingResonrces.energyhoney });
         }
     }
     private void ChangeShopResurs(string shopName, ShopResources changeResurs)//Изменение ресурсов в магазине 
@@ -160,17 +201,17 @@ public class ShopController : MonoBehaviour
         if (online)
         {
             Dictionary<string, int> resourcesChanged = new Dictionary<string, int>();
-            shopFromServer.resources.Resurse1.count -= changeResurs.Resurse1.count;
-            shopFromServer.resources.Resurse2.count -= changeResurs.Resurse2.count;
-            shopFromServer.resources.Resurse3.count -= changeResurs.Resurse3.count;
-            shopFromServer.resources.Resurse4.count -= changeResurs.Resurse4.count;
-            shopFromServer.resources.Resurse5.count -= changeResurs.Resurse5.count;
+            shopFromServer.resources.food.count -= changeResurs.food.count;
+            shopFromServer.resources.materials.count -= changeResurs.materials.count;
+            shopFromServer.resources.electronics.count -= changeResurs.electronics.count;
+            shopFromServer.resources.weapons.count -= changeResurs.weapons.count;
+            shopFromServer.resources.energyhoney.count -= changeResurs.energyhoney.count;
 
-            if (changeResurs.Resurse1.count != 0) resourcesChanged.Add(buying_resurs1, changeResurs.Resurse1.count);
-            if (changeResurs.Resurse2.count != 0) resourcesChanged.Add(buying_resurs2, changeResurs.Resurse2.count);
-            if (changeResurs.Resurse3.count != 0) resourcesChanged.Add(buying_resurs3, changeResurs.Resurse3.count);
-            if (changeResurs.Resurse4.count != 0) resourcesChanged.Add(buying_resurs4, changeResurs.Resurse4.count);
-            if (changeResurs.Resurse5.count != 0) resourcesChanged.Add(buying_resurs5, changeResurs.Resurse5.count);
+            if (changeResurs.food.count != 0) resourcesChanged.Add(buying_food, changeResurs.food.count);
+            if (changeResurs.materials.count != 0) resourcesChanged.Add(buying_materials, changeResurs.materials.count);
+            if (changeResurs.electronics.count != 0) resourcesChanged.Add(buying_electronics, changeResurs.electronics.count);
+            if (changeResurs.weapons.count != 0) resourcesChanged.Add(buying_weapons, changeResurs.weapons.count);
+            if (changeResurs.energyhoney.count != 0) resourcesChanged.Add(buying_energyhoney, changeResurs.energyhoney.count);
             SetShopOnServer(this, shopName);
             CreateLog("The player sold resources", shopName, resourcesChanged);
         }
