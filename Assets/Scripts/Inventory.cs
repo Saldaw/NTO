@@ -16,7 +16,7 @@ public class Inventory : MonoBehaviour
     const string add_materials = "add_materials";
     const string add_electronics = "add_electronics";
     const string add_weapons = "add_weapons";
-    const string add_energyhoney = "add_weapons";
+    const string add_energyhoney = "add_energyhoney";
     const string add_goldhoney = "add_goldhoney";
     //-----------------------------------------------------------\\
     private string playerName;
@@ -50,6 +50,7 @@ public class Inventory : MonoBehaviour
     //-----------------------------------------------------------\\
     private List<Log> Logs = new List<Log>();
     [SerializeField] private ConnectionErrorUI errorUI;
+    [SerializeField] private ResursInfo resursInfo;
     //--------------------------Инвентарь--------------------------\\
     private PlayerInventory localPlayerInventory = new PlayerInventory
     {
@@ -81,6 +82,7 @@ public class Inventory : MonoBehaviour
         localPlayerInventory.weapons += changes.weapons;
         localPlayerInventory.energyhoney += changes.energyhoney;
         localPlayerInventory.goldhoney += changes.goldhoney;
+        resursInfo.UodateInfo(localPlayerInventory);
         if (online)
         {
             changesPlayerInventory.food += changes.food;
@@ -139,6 +141,7 @@ public class Inventory : MonoBehaviour
         {
             Debug.Log("The value on the local machine is different from the server value!");
             localPlayerInventory = (PlayerInventory)correctPlayerInventory.Clone();
+            resursInfo.UodateInfo(localPlayerInventory);
         }
         SetInventoryOnServer(this, playerName, correctPlayerInventory);
     }
@@ -200,15 +203,14 @@ public class Inventory : MonoBehaviour
         HttpClient httpClient = new HttpClient();
         string logJson = JsonConvert.SerializeObject(log);
         var content = new StringContent(logJson, System.Text.Encoding.UTF8, "application/json");
-
         try
         {
             var response = await httpClient.PostAsync(requestUrl, content);
+            Debug.Log(response.IsSuccessStatusCode);
 
             if (!response.IsSuccessStatusCode)
             {
                 self.errorUI.AddError(content, requestUrl);
-                Debug.Log("Synchronization error");
             }
         }
         catch (Exception ex)

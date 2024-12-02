@@ -13,6 +13,7 @@ public class Tiker : MonoBehaviour
     {
         StartCoroutine(TiksMovingCorutin());
         StartCoroutine(TiksHonyCorutin());
+        StartCoroutine(TiksFoodCorutin());
     }
     private IEnumerator TiksMovingCorutin()
     {
@@ -30,6 +31,14 @@ public class Tiker : MonoBehaviour
             yield return new WaitForSeconds(timeHony);
         }
     }
+    private IEnumerator TiksFoodCorutin()
+    {
+        while (true)
+        {
+            TiksFood();
+            yield return new WaitForSeconds(timeHony);
+        }
+    }
     private void TiksMoving()
     {
         for (int i = 0; i < groops.Count; i++)
@@ -41,8 +50,15 @@ public class Tiker : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("countHony5") != 0)
         {
-            plyerInventory.ChangeResurs(new Inventory.PlayerInventory() { energyhoney = PlayerPrefs.GetInt("countHony5") }, "The extracted honey is respected");
+            plyerInventory.ChangeResurs(new Inventory.PlayerInventory() { energyhoney = PlayerPrefs.GetInt("countHony5") }, "Honey was collected from the player's trees");
         }   
+    }
+    private void TiksFood()
+    {
+        if (PlayerPrefs.GetInt("BearsOnFarm") != 0)
+        {
+            plyerInventory.ChangeResurs(new Inventory.PlayerInventory() { food = PlayerPrefs.GetInt("BearsOnFarm") }, "Farms produce a harvest");
+        }
     }
     // Update is called once per frame
     void Update()

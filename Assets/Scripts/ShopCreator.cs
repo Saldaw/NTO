@@ -35,15 +35,15 @@ public class ShopCreator : MonoBehaviour
     private void Awake()//Создаём магазин при инициализации
     {
         playerName = PlayerPrefs.GetString("Name");
-        ShopResources shopResurses = new ShopResources() { food = {count = 5, cost = 10 }, electronics = {count = 2, cost = 20 }, energyhoney = {count = 15, cost = 10}, materials = {count = 1, cost = 20 }, weapons = {count = 0, cost = 10}};
+        ShopResources shopResurses = new ShopResources() { food = {count = 5, cost = 2 }, electronics = {count = 2, cost = 20 }, energyhoney = {count = 15, cost = 10}, materials = {count = 1, cost = 20 }, weapons = {count = 0, cost = 10}};
         CreateShop("City1Shop", shopResurses);
-        shopResurses = new ShopResources() { food = { count = 2, cost = 15 }, electronics = { count = 4, cost = 15 }, energyhoney = { count = 15, cost = 10 }, materials = { count = 10, cost = 10 }, weapons = { count = 0, cost = 10 } };
+        shopResurses = new ShopResources() { food = { count = 2, cost = 2 }, electronics = { count = 4, cost = 15 }, energyhoney = { count = 15, cost = 10 }, materials = { count = 10, cost = 10 }, weapons = { count = 0, cost = 10 } };
         CreateShop("City2Shop", shopResurses);
-        shopResurses = new ShopResources() { food = { count = 15, cost = 12 }, electronics = { count = 0, cost = 20 }, energyhoney = { count = 3, cost = 15 }, materials = { count = 3, cost = 15 }, weapons = { count = 0, cost = 10 } };
+        shopResurses = new ShopResources() { food = { count = 15, cost = 2 }, electronics = { count = 0, cost = 20 }, energyhoney = { count = 3, cost = 15 }, materials = { count = 3, cost = 15 }, weapons = { count = 0, cost = 10 } };
         CreateShop("City3Shop", shopResurses);
         shopResurses = new ShopResources() { food = { count = 5, cost = 10 }, electronics = { count = 5, cost = 10 }, energyhoney = { count = 5, cost = 10 }, materials = { count = 5, cost = 10 }, weapons = { count = 5, cost = 10 } };
         CreateShop("City4Shop", shopResurses);
-        shopResurses = new ShopResources() { food = { count = 0, cost = 20 }, electronics = { count = 2, cost = 15 }, energyhoney = { count = 0, cost = 5 }, materials = { count = 15, cost = 7 }, weapons = { count = 5, cost = 10 } };
+        shopResurses = new ShopResources() { food = { count = 0, cost = 5 }, electronics = { count = 2, cost = 15 }, energyhoney = { count = 0, cost = 5 }, materials = { count = 15, cost = 7 }, weapons = { count = 5, cost = 10 } };
         CreateShop("City6Shop", shopResurses);
     }
 

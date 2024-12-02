@@ -11,6 +11,10 @@ public class ConnectionErrorUI : MonoBehaviour
     [SerializeField] private GameObject errorMenu;
     [SerializeField] private Button tryButton;
 
+    private void Start()
+    {
+        Time.timeScale = 1f;
+    }
     public void TryAgain()
     {
         tryButton.interactable = false;

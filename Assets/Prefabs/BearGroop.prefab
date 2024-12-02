@@ -87,7 +87,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &5307008062139940838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,8 +119,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 7414346721612686439}
   countText: {fileID: 7774975039244081183}
+  countBear: 0
+  owner: 0
   targetPosition: {fileID: 0}
-  FinishTargetPosition: {x: 0, y: 0, z: 0}
+  StartPosition: {x: 0, y: 0, z: 0}
+  EndPosition: {x: 0, y: 0, z: 0}
+  targetWalking: 0
+  startWalking: 0
   creator: {fileID: 0}
 --- !u!65 &4338268563889805916
 BoxCollider:
