@@ -8,6 +8,7 @@ public class Tiker : MonoBehaviour
     [SerializeField] private float timeMove=5f;
     [SerializeField] private float timeHony = 30f;
     [SerializeField] Inventory plyerInventory;
+    [SerializeField] private Pause pause;
     // Start is called before the first frame update
     void Start()
     {
@@ -63,6 +64,13 @@ public class Tiker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape) && !pause.gameObject.active)
+        {
+            pause.OpenPause();
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && pause.gameObject.active)
+        {
+            pause.ClousePause();
+        }
     }
 }
