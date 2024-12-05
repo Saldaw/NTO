@@ -28,7 +28,7 @@ public class CameraControlle : MonoBehaviour
     private bool isZooming = false;
 
     private float minZoomPlanet = -25;
-    private float maxZoom = 5;
+    private float maxZoom = 4;
 
     const int ziroCord = 1500;
 
