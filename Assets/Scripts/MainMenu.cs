@@ -20,7 +20,7 @@ public class MainMenu : MonoBehaviour
 
     public void Play()
     {
-        // напишешь сам код перехода
+        SceneManager.LoadScene(1);
     }
 
     public void Exit()

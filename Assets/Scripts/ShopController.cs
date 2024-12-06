@@ -217,7 +217,30 @@ public class ShopController : MonoBehaviour
         }
     }
 
-    private void CreateLog(string comment, string shopName, Dictionary<string, int> resourcesThatChanged)//Создание лога 
+    public void RestartShop(int num)
+    {
+        switch (num)
+        {
+            case 1:
+                shopFromServer = localShop1;
+                break;
+            case 2:
+                shopFromServer = localShop2;
+                break;
+            case 3:
+                shopFromServer = localShop3;
+                break;
+            case 4:
+                shopFromServer = localShop4;
+                break;
+            case 6:
+                shopFromServer = localShop6;
+                break;
+        }
+        CreateLog("The store has been updated", $"City{num}Shop");
+    }
+
+    private void CreateLog(string comment, string shopName, Dictionary<string, int> resourcesThatChanged = null)//Создание лога 
     {
         Log log = new Log()
         {

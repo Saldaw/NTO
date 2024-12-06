@@ -6,6 +6,7 @@ public class AIBot : MonoBehaviour
     [SerializeField] private int numBot;
     [SerializeField] private int necessarAmountOfFriendshipForAttackHonyTree;
     [SerializeField] private int friendshipLevelRequiredToLaunchAttackOnPlayer;
+    [SerializeField] private ShopController shopController;
     private GroopController groopController;
 
     // Start is called before the first frame update
@@ -41,18 +42,19 @@ public class AIBot : MonoBehaviour
             {
                 AttackOnTree();
             }
-            else if (UnityEngine.Random.Range(1, 2) == 1 && frending > 5)
+            else if (UnityEngine.Random.Range(1, 2) == 1 && frending > 1)
             {
-                PlayerPrefs.SetInt($"friendy{numBot}", frending - 5);
+                PlayerPrefs.SetInt($"friendy{numBot}", frending - 1);
             }
         }
         else if (frending <= friendshipLevelRequiredToLaunchAttackOnPlayer && UnityEngine.Random.Range(1, 2) == 1)
         {
             AttackOnPlayer();
         }
-        else if (UnityEngine.Random.Range(1, 2) == 1 && frending <= 95)
+        else if (UnityEngine.Random.Range(1, 2) == 1 && frending <= 99)
         {
-            PlayerPrefs.SetInt($"friendy{numBot}", frending + 5);
+            PlayerPrefs.SetInt($"friendy{numBot}", frending + 1);
+            shopController.RestartShop(numBot);
         }
     }
     private IEnumerator TiksBot()
@@ -60,7 +62,7 @@ public class AIBot : MonoBehaviour
         while (true)
         {
             CheckInfo();
-            yield return new WaitForSeconds(60f);
+            yield return new WaitForSeconds(90f);
         }
     }
 }

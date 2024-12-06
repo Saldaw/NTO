@@ -8,6 +8,7 @@ using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCou
 public class GroopImage : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer image;
+    [SerializeField] private List<Sprite> sprites = new List<Sprite>();
     [SerializeField] private TextMeshProUGUI countText;
     public int countBear;
     public int owner;
@@ -33,12 +34,12 @@ public class GroopImage : MonoBehaviour
         EndPosition = StartPosition;
         targetWalking = startWalking;
     }
-    public void SetInfo(Sprite img, int count, Groop groop, GroopController groopCreator)
+    public void SetInfo(int count, Groop groop, GroopController groopCreator)
     {
-        image.sprite = img;
         countText.text = count.ToString();
         countBear = count;
         thisGroop = groop;
         creator = groopCreator;
+        image.sprite = sprites[owner];
     }
 }

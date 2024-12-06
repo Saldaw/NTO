@@ -27,6 +27,7 @@ public class CityParametr : MonoBehaviour
         }
         else
         {
+            CityUI.GetComponent<CityUi>().UpdateInfo(numSity);
             CityUI.SetActive(true);
         }
     }
