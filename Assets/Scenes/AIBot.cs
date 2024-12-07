@@ -38,9 +38,9 @@ public class AIBot : MonoBehaviour
         int countHonyBotBase = PlayerPrefs.GetInt($"countHony{numBot}");
         if (countHonyBotBase < countHonyPlayerBase)
         {
-            if (frending <= necessarAmountOfFriendshipForAttackHonyTree && UnityEngine.Random.Range(1, 3) > 1)
+            if (frending <= necessarAmountOfFriendshipForAttackHonyTree)
             {
-                AttackOnTree();
+                if (UnityEngine.Random.Range(1, 3) > 1)AttackOnTree();
             }
             else if (UnityEngine.Random.Range(1, 2) == 1 && frending > 1)
             {
