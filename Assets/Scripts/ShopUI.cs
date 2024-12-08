@@ -53,6 +53,7 @@ public class ShopUI : MonoBehaviour
 
     public void UpdateInfo(Shop info)
     {
+        counterMenu.SetActive(false);
         if (info.resources.food.count > 0) { buttonBuy1.enabled = true; buttonBuy1.image.sprite = imagesForButton[0]; } else { buttonBuy1.enabled = false; buttonBuy1.image.sprite = imagesForButton[1]; }
         if (info.resources.materials.count > 0) { buttonBuy2.enabled = true; buttonBuy2.image.sprite = imagesForButton[0]; } else { buttonBuy2.enabled = false; buttonBuy2.image.sprite = imagesForButton[1]; }
         if (info.resources.electronics.count > 0) { buttonBuy3.enabled = true; buttonBuy3.image.sprite = imagesForButton[0]; } else { buttonBuy3.enabled = false; buttonBuy3.image.sprite = imagesForButton[1]; }

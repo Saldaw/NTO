@@ -5000,7 +5000,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b95169c1e22e9c40a0de35876dffa3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 1d118d4ea61ab0b439e25a8e15d540f3, type: 3}
   groopMove: {fileID: 4590336346295352735, guid: 95d6ccca3a871db43b4e358a0a7e9b1d,
     type: 3}
   groopUI: {fileID: 5184781219858840073, guid: efc7ccfab6bb4a9429c7dd3266709f4c, type: 3}
@@ -5023,7 +5022,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numSity: 0
-  groopCreatorUI: {fileID: 0}
+  TreeUI: {fileID: 0}
 --- !u!65 &8615743698857410594
 BoxCollider:
   m_ObjectHideFlags: 0

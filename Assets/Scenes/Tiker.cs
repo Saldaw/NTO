@@ -58,7 +58,7 @@ public class Tiker : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("BearsOnFarm") != 0)
         {
-            plyerInventory.ChangeResurs(new Inventory.PlayerInventory() { food = PlayerPrefs.GetInt("BearsOnFarm") }, "Farms produce a harvest");
+            plyerInventory.ChangeResurs(new Inventory.PlayerInventory() { food = PlayerPrefs.GetInt("BearsOnFarm")/5+1 }, "Farms produce a harvest");
         }
     }
     // Update is called once per frame

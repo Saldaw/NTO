@@ -6,9 +6,12 @@ using UnityEngine.UI;
 
 public class CityUi : MonoBehaviour
 {
+    [SerializeField] private ShopUI shop;
+    [SerializeField] private Gift gift;
+    [SerializeField] private GroopCreatorUI groopCreator;
     [SerializeField] private Image image;
     [SerializeField] private TextMeshProUGUI text1;
-    private List<string> names = new List<string>() {"-","Александр","-", "-", "-", "-", "-" };
+    private List<string> names = new List<string>() {"-", "Александр Орешников", "Мария Тенелюбова", "Василий Добронравов", "Анита Тяжелая Лапа", "-", "Сунь Цзинь" };
     [SerializeField] private TextMeshProUGUI Name;
     [SerializeField] private List<Sprite> sprites_war;
     [SerializeField] private List<Sprite> sprites_deffolt;
@@ -16,13 +19,32 @@ public class CityUi : MonoBehaviour
     [SerializeField] private Image image2;
     [SerializeField] Button buttonGift;
     [SerializeField] Button buttonShop;
+    private int num;
     // Start is called before the first frame update
     void Start()
     {
         
     }
-    public void UpdateInfo(int num)
+    public void OpenShop()
     {
+        shop.Open($"City{num}Shop");
+        shop.gameObject.SetActive(true);
+    }
+    public void OpenGift()
+    {
+        gift.SetBot(num);
+        gift.gameObject.SetActive(true);
+    }
+    public void OpenWar()
+    {
+        groopCreator.UpdateInfo(num);
+        groopCreator.gameObject.SetActive(true);
+        PlayerPrefs.SetInt($"friendy{num}",10);
+        UpdateInfo(num);
+    }
+    public void UpdateInfo(int numb)
+    {
+        num = numb;
         int friendy = PlayerPrefs.GetInt($"friendy{num}");
         image.fillAmount = friendy / 100f;
         text1.text = friendy.ToString();

@@ -22,6 +22,7 @@ public class LoginPlayer : MonoBehaviour
     [Serializable] public class Player//Класс пустого игрока 
     {
         public string name;
+        public Inventory.PlayerInventory resources;
     }
     void Start()
     {
@@ -92,15 +93,13 @@ public class LoginPlayer : MonoBehaviour
         string requestUrl = "https://2025.nti-gamedev.ru/api/games/d5ebfca3-ee6d-485f-9a9b-a53809bfcb62/players/";
 
         HttpClient httpClient = new HttpClient();
-
-        Player player = new Player() { name = $"{self.inputField.text}" };
+        Player player = new Player() { name = $"{self.inputField.text}", resources = new Inventory.PlayerInventory() {weapons=1 } };
         string playerJson = JsonUtility.ToJson(player);
         var content = new StringContent(playerJson, System.Text.Encoding.UTF8, "application/json");
 
         try
         {
             var response = await httpClient.PostAsync(requestUrl, content);
-
             if (!response.IsSuccessStatusCode)
             {
                 self.statusText.text = "Ошибка";

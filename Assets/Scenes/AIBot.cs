@@ -42,7 +42,7 @@ public class AIBot : MonoBehaviour
             {
                 if (UnityEngine.Random.Range(1, 3) > 1)AttackOnTree();
             }
-            else if (UnityEngine.Random.Range(1, 2) == 1 && frending > 1)
+            else if (UnityEngine.Random.Range(1, 3) == 1 && frending > 1)
             {
                 PlayerPrefs.SetInt($"friendy{numBot}", frending - 1);
             }
@@ -51,16 +51,17 @@ public class AIBot : MonoBehaviour
         {
             AttackOnPlayer();
         }
-        else if (UnityEngine.Random.Range(1, 2) == 1 && frending <= 99)
+        else if (UnityEngine.Random.Range(1, 3) == 1 && frending <= 99)
         {
             PlayerPrefs.SetInt($"friendy{numBot}", frending + 1);
-            shopController.RestartShop(numBot);
+            if(UnityEngine.Random.Range(1, 3) == 1) shopController.RestartShop(numBot);
         }
     }
     private IEnumerator TiksBot()
     {
         while (true)
         {
+            yield return new WaitForSeconds(5f);
             CheckInfo();
             yield return new WaitForSeconds(90f);
         }

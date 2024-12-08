@@ -206,7 +206,6 @@ public class Inventory : MonoBehaviour
         try
         {
             var response = await httpClient.PostAsync(requestUrl, content);
-            Debug.Log(response.IsSuccessStatusCode);
 
             if (!response.IsSuccessStatusCode)
             {

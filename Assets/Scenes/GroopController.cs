@@ -10,10 +10,10 @@ public class GroopController : MonoBehaviour
     [SerializeField] private GameObject groopMove;
     [SerializeField] private GameObject groopUI;
     [SerializeField] private Tiker tiker;
-    [SerializeField] private int point;
-    [SerializeField] private int owner;
+    [SerializeField] public int point;
+    [SerializeField] public int owner;
     [SerializeField] private Inventory inventory;
-    public int bearsHear;
+    public int bearsHear = 0;
     [SerializeField] int type;
     // Start is called before the first frame update
     void Start()

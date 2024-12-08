@@ -102,7 +102,6 @@ public class ShopController : MonoBehaviour
     
     void Start()
     {
-        
 
     }
 
@@ -237,7 +236,9 @@ public class ShopController : MonoBehaviour
                 shopFromServer = localShop6;
                 break;
         }
-        CreateLog("The store has been updated", $"City{num}Shop");
+
+        playerName = PlayerPrefs.GetString("Name");
+        SetShopOnServer(this, $"City{num}Shop");
     }
 
     private void CreateLog(string comment, string shopName, Dictionary<string, int> resourcesThatChanged = null)//Создание лога 
@@ -245,7 +246,7 @@ public class ShopController : MonoBehaviour
         Log log = new Log()
         {
             comment = $"{DateTime.UtcNow}: {comment}",
-            player_name = playerName,
+            player_name = PlayerPrefs.GetString("Name"),
             shop_name = shopName,
             resources_changed = resourcesThatChanged
         };
@@ -280,11 +281,10 @@ public class ShopController : MonoBehaviour
     static async void SetShopOnServer(ShopController self, string shopName)//Изменение магазина на сервере 
     {
         string url = $"https://2025.nti-gamedev.ru/api/games/d5ebfca3-ee6d-485f-9a9b-a53809bfcb62/players/{self.playerName}/shops/{shopName}/";
-
         HttpClient httpClient = new HttpClient();
         string inventoryJson = JsonUtility.ToJson(self.shopFromServer);
         var content = new StringContent(inventoryJson, System.Text.Encoding.UTF8, "application/json");
-
+        
         try
         {
             var response = await httpClient.PutAsync(url, content);

@@ -8,6 +8,7 @@ public class SelectCount : MonoBehaviour
     [SerializeField] Image prograssBar1;
     [SerializeField] Image prograssBar2;
     [SerializeField] Image prograssBar3;
+    [SerializeField] Inventory inventory;
     [SerializeField] PlayerFabric fabric;
     private int bear1;
     private int bear2;
@@ -20,6 +21,15 @@ public class SelectCount : MonoBehaviour
     void Start()
     {
         
+    }
+    public void AddBear()
+    {
+        if(inventory.GetLocalInventory().food >= 1){
+            inventory.ChangeResurs(new Inventory.PlayerInventory() { food = -1 }, "A bear was created");
+            PlayerPrefs.SetInt("countLiversIdle5", PlayerPrefs.GetInt("countLiversIdle5") + 1);
+            PlayerPrefs.SetInt("countLivers5", PlayerPrefs.GetInt("countLivers5") + 1);
+            UpdateInfo();
+        }
     }
     public void UpdateInfo()
     {

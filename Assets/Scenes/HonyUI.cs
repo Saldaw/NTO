@@ -5,11 +5,15 @@ using UnityEngine;
 public class HonyUI : MonoBehaviour
 {
     [SerializeField] private int numSity;
-
-    [SerializeField] private GameObject groopCreatorUI;
-    public void OnMouseDown()
+    private GroopController groopController;
+    [SerializeField] private GameObject TreeUI;
+    private void Start()
     {
-        groopCreatorUI.SetActive(true);
-        groopCreatorUI.GetComponent<GroopCreatorUI>().UpdateInfo(numSity);
+        groopController = GetComponent<GroopController>();
+    }
+    public void OnMouseUp()
+    {
+        TreeUI.SetActive(true);
+        TreeUI.GetComponent<TreeUI>().UpdateInfo(groopController);
     }
     }
