@@ -9,6 +9,8 @@ public class Tiker : MonoBehaviour
     [SerializeField] private float timeHony = 30f;
     [SerializeField] Inventory plyerInventory;
     [SerializeField] private Pause pause;
+    [SerializeField] private GameObject Win;
+    [SerializeField] private GameObject End;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +23,16 @@ public class Tiker : MonoBehaviour
         while (true)
         {
             TiksMoving();
+            if ((PlayerPrefs.GetInt("friendy1") >= 90 || PlayerPrefs.GetInt("isDie1") == 1) && (PlayerPrefs.GetInt("friendy2") >= 90 || PlayerPrefs.GetInt("isDie2") == 1) && (PlayerPrefs.GetInt("friendy3") >= 90 || PlayerPrefs.GetInt("isDie3") == 1) && (PlayerPrefs.GetInt("friendy4") >= 90 || PlayerPrefs.GetInt("isDie4") == 1) && (PlayerPrefs.GetInt("friendy6") >= 90 || PlayerPrefs.GetInt("isDie6") == 1))
+            {
+                Win.SetActive(true);
+                Time.timeScale = 0f;
+            }
+            else if (PlayerPrefs.GetInt("isDie5") == 1)
+            {
+                End.SetActive(true);
+                Time.timeScale = 0f;
+            }
             yield return new WaitForSeconds(timeMove);
         }
     }

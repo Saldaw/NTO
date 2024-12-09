@@ -30,7 +30,7 @@ public class Pause : MonoBehaviour
     }
     public void Quit()
     {
-        Quit();
+        Application.Quit();
     }
         // Update is called once per frame
     void Update()

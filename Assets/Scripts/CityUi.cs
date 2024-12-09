@@ -14,6 +14,7 @@ public class CityUi : MonoBehaviour
     private List<string> names = new List<string>() {"-", "Александр Орешников", "Мария Тенелюбова", "Василий Добронравов", "Анита Тяжелая Лапа", "-", "Сунь Цзинь" };
     [SerializeField] private TextMeshProUGUI Name;
     [SerializeField] private List<Sprite> sprites_war;
+    [SerializeField] private TextMeshProUGUI countBear;
     [SerializeField] private List<Sprite> sprites_deffolt;
     [SerializeField] private List<Sprite> sprites_franding;
     [SerializeField] private Image image2;
@@ -45,6 +46,7 @@ public class CityUi : MonoBehaviour
     public void UpdateInfo(int numb)
     {
         num = numb;
+        countBear.text = PlayerPrefs.GetInt($"countLiversIdle{num}").ToString();
         int friendy = PlayerPrefs.GetInt($"friendy{num}");
         image.fillAmount = friendy / 100f;
         text1.text = friendy.ToString();

@@ -12,6 +12,7 @@ public class CameraControlle : MonoBehaviour
     [SerializeField] private GameObject cameraPlanetCamera;
     [SerializeField] private GameObject Planet;
     [SerializeField] private GameObject PlanetVive;
+    [SerializeField] private AudioSource perehod;
     [Range(2, 200)] public int Spead = 2;
     [SerializeField] private float movingSpead;
     private bool cameraPlanetMode = true;
@@ -99,6 +100,7 @@ public class CameraControlle : MonoBehaviour
         
         if (cameraPlanetMode)
         {
+            perehod.Play();
             cameraPlanetMode = !cameraPlanetMode;
             if (Planet.transform.eulerAngles.y > 180) mainCameraPosition.x = ziroCord + mapScale / 2 * -(360 - Planet.transform.eulerAngles.y) / 180;
             else mainCameraPosition.x = ziroCord + mapScale / 2 * Planet.transform.eulerAngles.y / 180;
@@ -116,6 +118,7 @@ public class CameraControlle : MonoBehaviour
     }
     void ChangeModPlanet()
     {
+        perehod.Play();
         cameraPlanetMode = !cameraPlanetMode;
         cameraPlanet.transform.eulerAngles = new Vector3(0, 0, 0);
         cameraPlanet.transform.Rotate((cameraMain.transform.position.z - ziroCord) / (mapScale / 2)*90f, -90,0);

@@ -62,6 +62,10 @@ public class AIBot : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(5f);
+            if (PlayerPrefs.GetInt($"isDie{numBot}")==1 )
+            {
+                break;
+            }
             CheckInfo();
             yield return new WaitForSeconds(90f);
         }

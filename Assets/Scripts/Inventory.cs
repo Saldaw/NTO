@@ -7,7 +7,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Newtonsoft.Json;
 using UnityEngine.UI;
-using UnityEditor.PackageManager;
 
 public class Inventory : MonoBehaviour
 {
@@ -58,7 +57,7 @@ public class Inventory : MonoBehaviour
         materials = 0,
         electronics = 0,
         weapons = 0,
-        energyhoney = 0,
+        energyhoney = 1,
         goldhoney = 0,
     };
     private PlayerInventory changesPlayerInventory = new PlayerInventory

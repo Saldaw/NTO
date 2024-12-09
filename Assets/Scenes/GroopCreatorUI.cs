@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class GroopCreatorUI : MonoBehaviour
 {
@@ -59,7 +58,7 @@ public class GroopCreatorUI : MonoBehaviour
     public void SendGroop()
     {
         playerGC.CreateGroop((int)slider.value, pointToGo);
-        inventory.ChangeResurs(new Inventory.PlayerInventory() { weapons = -resurses.weapons }, "A group was sent");
+        inventory.ChangeResurs(new Inventory.PlayerInventory() { weapons = -(int)slider.value }, "A group was sent");
         PlayerPrefs.SetInt("countLiversIdle5", PlayerPrefs.GetInt("countLiversIdle5") - (int)slider.value);
         this.gameObject.SetActive(false);
     }

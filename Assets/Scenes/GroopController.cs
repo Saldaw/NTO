@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
+using UnityEngine.UI;
 
 public class GroopController : MonoBehaviour
 {
@@ -13,8 +13,11 @@ public class GroopController : MonoBehaviour
     [SerializeField] public int point;
     [SerializeField] public int owner;
     [SerializeField] private Inventory inventory;
+    [SerializeField] private CityParametr cityParametr;
     public int bearsHear = 0;
     [SerializeField] int type;
+    [SerializeField] private SpriteRenderer flag;
+    [SerializeField] private List<Sprite> flags;
     // Start is called before the first frame update
     void Start()
     {
@@ -71,9 +74,11 @@ public class GroopController : MonoBehaviour
             else if(type == 1 && groopInTriger.countBear * PlayerPrefs.GetInt($"force{groopInTriger.owner}") > PlayerPrefs.GetInt($"countLiversIdle{owner}") + PlayerPrefs.GetInt($"defense{owner}"))
             {
                 PlayerPrefs.SetInt($"isDie{owner}", 1);
+                PlayerPrefs.SetInt($"countLiversIdle{groopInTriger.owner}", PlayerPrefs.GetInt($"countLiversIdle{groopInTriger.owner}") + groopInTriger.countBear - bearsHear);
+                flag.sprite = flags[groopInTriger.owner];
                 owner = groopInTriger.owner;
+                cityParametr.numSity = owner;
                 DestroyGroop(groopInTriger.thisGroop);
-                bearsHear = bearsHear = Mathf.Max(groopInTriger.countBear - PlayerPrefs.GetInt($"countLiversIdle{owner}"), 1);
             }
             else if (groopInTriger.countBear * PlayerPrefs.GetInt($"force{groopInTriger.owner}") <= bearsHear * PlayerPrefs.GetInt($"force{owner}"))
             {

@@ -1,10 +1,7 @@
 using Newtonsoft.Json;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
-using UnityEditor.PackageManager;
-using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class ShopController : MonoBehaviour
@@ -238,7 +235,7 @@ public class ShopController : MonoBehaviour
         }
 
         playerName = PlayerPrefs.GetString("Name");
-        SetShopOnServer(this, $"City{num}Shop");
+        if(PlayerPrefs.GetInt("Online")==1)SetShopOnServer(this, $"City{num}Shop");
     }
 
     private void CreateLog(string comment, string shopName, Dictionary<string, int> resourcesThatChanged = null)//Создание лога 

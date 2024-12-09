@@ -17,6 +17,9 @@ public class Pixelezator : MonoBehaviour
         int height = Mathf.RoundToInt(Screen.height / Scale);
         texture.width = width;
         texture.height = height;
-        quad.transform.localScale = new Vector3(Screen.width*1f / Screen.height, 1, 1); 
+        quad.transform.localScale = new Vector3(Screen.width*1f / Screen.height, 1, 1);
+        texture.width = width;
+        texture.height = height;
+        quad.transform.localScale = new Vector3(Screen.width * 1f / Screen.height, 1, 1);
     }
 }

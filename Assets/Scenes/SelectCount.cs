@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,10 @@ public class SelectCount : MonoBehaviour
     [SerializeField] Image prograssBar3;
     [SerializeField] Inventory inventory;
     [SerializeField] PlayerFabric fabric;
+    [SerializeField] TextMeshProUGUI countText1;
+    [SerializeField] TextMeshProUGUI countText2;
+    [SerializeField] TextMeshProUGUI countText3;
+
     private int bear1;
     private int bear2;
     private int bear3;
@@ -40,6 +45,9 @@ public class SelectCount : MonoBehaviour
         bear3 = PlayerPrefs.GetInt("countLiversIdle5");
         bear3max = PlayerPrefs.GetInt("countLivers5");
 
+        countText1.text = bear1.ToString();
+        countText2.text = bear2.ToString();
+        countText3.text = bear3.ToString();
         prograssBar1.fillAmount = (float)bear1 / bear1max;
         prograssBar2.fillAmount = (float)bear2 / bear2max;
         prograssBar3.fillAmount = (float)bear3 / bear3max;

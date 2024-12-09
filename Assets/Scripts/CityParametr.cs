@@ -15,7 +15,7 @@ public class CityParametr : MonoBehaviour
     private int countHony;
     private int isDie;
 
-    [SerializeField] private int numSity;
+    [SerializeField] public int numSity;
     [SerializeField] private GameObject groopCreatorUI;
     [SerializeField] private GameObject plauerUI;
     [SerializeField] private GameObject CityUI;
@@ -53,7 +53,7 @@ public class CityParametr : MonoBehaviour
     private void GenerateParametrs()
     {
         countLivers = Random.Range(10, 20);
-        defense = Random.Range(10, 20);
+        defense = Random.Range(0, 0);
         friendy = Random.Range(40, 60);
         trade = Random.Range(40, 60);
         SaveParametrs();
