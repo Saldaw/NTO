@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    [SerializeField] private GameObject loading;
     [SerializeField] private GameObject mainButtonHolder;
 
     [SerializeField] private GameObject settingsButtonHolder;
@@ -16,11 +17,18 @@ public class MainMenu : MonoBehaviour
     private void Awake()
     {
         CloseSettings();
+        Time.timeScale = 1.0f;
     }
 
     public void Play()
     {
-        SceneManager.LoadScene(1);
+        StartCoroutine(loadLevel());
+    }
+    IEnumerator loadLevel()
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(1);
+        loading.SetActive(true);
+        yield return null;
     }
 
     public void Exit()

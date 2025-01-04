@@ -32,7 +32,7 @@ public class CameraControlle : MonoBehaviour
     private float maxZoom = 4;
 
     const int ziroCord = 1500;
-
+    public bool canMove = true;
     private Vector2 previousMousePosition;
     // Start is called before the first frame update
     void Start()
@@ -43,35 +43,38 @@ public class CameraControlle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (cameraPlanetMode)
+        if (canMove)
         {
-            if (Input.GetMouseButtonDown(1)) previousMousePosition = Input.mousePosition;
-            if (Input.GetMouseButton(1))
+            if (cameraPlanetMode)
             {
-                Vector2 currentMousePosition = Input.mousePosition;
-                Vector2 mousDelta = currentMousePosition - previousMousePosition;
-                previousMousePosition = currentMousePosition;
-                if (mousDelta.y != 0) RotateCameraY(mousDelta.y/ Screen.height/2);
-                if (mousDelta.x != 0) RotatePlanetX(mousDelta.x / Screen.width);
+                if (Input.GetMouseButtonDown(1)) previousMousePosition = Input.mousePosition;
+                if (Input.GetMouseButton(1))
+                {
+                    Vector2 currentMousePosition = Input.mousePosition;
+                    Vector2 mousDelta = currentMousePosition - previousMousePosition;
+                    previousMousePosition = currentMousePosition;
+                    if (mousDelta.y != 0) RotateCameraY(mousDelta.y / Screen.height / 2);
+                    if (mousDelta.x != 0) RotatePlanetX(mousDelta.x / Screen.width);
+                }
+                float mw = Input.GetAxis("Mouse ScrollWheel");
+                if (mw != 0)
+                    if (targetZoom + mw * wheel_speed * Time.deltaTime * 300 > minZoomPlanet) targetZoom += mw * wheel_speed * Time.deltaTime * 300; else targetZoom = minZoomPlanet;
+                isZooming = true;
+                if (isZooming) UpdateZooming();
             }
-            float mw = Input.GetAxis("Mouse ScrollWheel");
-            if (mw != 0)
-                if (targetZoom + mw * wheel_speed * Time.deltaTime * 300 > minZoomPlanet) targetZoom += mw * wheel_speed * Time.deltaTime * 300; else targetZoom = minZoomPlanet;
+            else
+            {
+                previousMousePosition = Input.mousePosition;
+                if (previousMousePosition.x / Screen.width > 0.9f) MoveCamera(1, 0);
+                if (previousMousePosition.x / Screen.width < 0.1f) MoveCamera(-1, 0);
+                if (previousMousePosition.y / Screen.height > 0.9f) MoveCamera(0, 1);
+                if (previousMousePosition.y / Screen.height < 0.1f) MoveCamera(0, -1);
+                float mw = Input.GetAxis("Mouse ScrollWheel");
+                if (mw != 0)
+                    if (targetZoom - mw * wheel_speed * Time.deltaTime * 300 > maxZoom) targetZoom -= mw * wheel_speed * Time.deltaTime * 300; else targetZoom = maxZoom;
                 isZooming = true;
-            if (isZooming) UpdateZooming();
-        }
-        else
-        {
-            previousMousePosition = Input.mousePosition;
-            if (previousMousePosition.x / Screen.width > 0.9f) MoveCamera(1,0);
-            if (previousMousePosition.x / Screen.width < 0.1f) MoveCamera(-1, 0);
-            if (previousMousePosition.y / Screen.height > 0.9f) MoveCamera(0, 1);
-            if (previousMousePosition.y / Screen.height < 0.1f) MoveCamera(0, -1);
-            float mw = Input.GetAxis("Mouse ScrollWheel");
-            if (mw != 0)
-                if(targetZoom - mw * wheel_speed * Time.deltaTime * 300>maxZoom)targetZoom -= mw * wheel_speed * Time.deltaTime * 300;else targetZoom = maxZoom;
-                isZooming = true;
-            if (isZooming) UpdateZoomingPlanet();
+                if (isZooming) UpdateZoomingPlanet();
+            }
         }
     }
     private void RotateCameraY(float y)
