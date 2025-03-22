@@ -26,7 +26,7 @@ public class MainMenu : MonoBehaviour
     }
     IEnumerator loadLevel()
     {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(1);
+        AsyncOperation operation = SceneManager.LoadSceneAsync(7);
         loading.SetActive(true);
         yield return null;
     }
