@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Map
+  - PlayerUnits
+  - NotPlayerUnit
   layers:
   - Default
   - TransparentFX

@@ -57,7 +57,7 @@ public class ShopCreator : MonoBehaviour
     }
     static async void PostShopOnServer(string playerName, Shop shop)//Создать магазин на сервере 
     {
-        string requestUrl = $"https://2025.nti-gamedev.ru/api/games/d5ebfca3-ee6d-485f-9a9b-a53809bfcb62/players/{playerName}/shops/";
+        string requestUrl = $"https://2025.nti-gamedev.ru/api/games/e9631fb2-0408-421c-a35f-140a70f2a916/players/{playerName}/shops/";
 
         HttpClient httpClient = new HttpClient();
         string inventoryJson = JsonUtility.ToJson(shop);

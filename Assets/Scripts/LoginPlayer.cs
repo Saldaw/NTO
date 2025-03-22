@@ -53,7 +53,7 @@ public class LoginPlayer : MonoBehaviour
         try
         {
             using var httpClient = new HttpClient();
-            string url = $"https://2025.nti-gamedev.ru/api/games/d5ebfca3-ee6d-485f-9a9b-a53809bfcb62/players/{username}/";
+            string url = $"https://2025.nti-gamedev.ru/api/games/e9631fb2-0408-421c-a35f-140a70f2a916/players/{username}/";
             var response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Head, url));
 
             if (response.IsSuccessStatusCode)
@@ -90,7 +90,7 @@ public class LoginPlayer : MonoBehaviour
     }
     static async void Register(LoginPlayer self)//Регистрация нового пользователя 
     {
-        string requestUrl = "https://2025.nti-gamedev.ru/api/games/d5ebfca3-ee6d-485f-9a9b-a53809bfcb62/players/";
+        string requestUrl = "https://2025.nti-gamedev.ru/api/games/e9631fb2-0408-421c-a35f-140a70f2a916/players/";
 
         HttpClient httpClient = new HttpClient();
         Player player = new Player() { name = $"{self.inputField.text}", resources = new Inventory.PlayerInventory() {energyhoney=1 } };

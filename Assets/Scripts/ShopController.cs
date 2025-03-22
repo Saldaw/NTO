@@ -256,7 +256,7 @@ public class ShopController : MonoBehaviour
         try
         {
             using var httpClient = new HttpClient();
-            string url = $"https://2025.nti-gamedev.ru/api/games/d5ebfca3-ee6d-485f-9a9b-a53809bfcb62/players/{self.playerName}/shops/{shopName}/";
+            string url = $"https://2025.nti-gamedev.ru/api/games/e9631fb2-0408-421c-a35f-140a70f2a916/players/{self.playerName}/shops/{shopName}/";
             HttpResponseMessage response = await httpClient.GetAsync(url);
 
             if (response.IsSuccessStatusCode)
@@ -277,7 +277,7 @@ public class ShopController : MonoBehaviour
     }
     static async void SetShopOnServer(ShopController self, string shopName)//Изменение магазина на сервере 
     {
-        string url = $"https://2025.nti-gamedev.ru/api/games/d5ebfca3-ee6d-485f-9a9b-a53809bfcb62/players/{self.playerName}/shops/{shopName}/";
+        string url = $"https://2025.nti-gamedev.ru/api/games/e9631fb2-0408-421c-a35f-140a70f2a916/players/{self.playerName}/shops/{shopName}/";
         HttpClient httpClient = new HttpClient();
         string inventoryJson = JsonUtility.ToJson(self.shopFromServer);
         var content = new StringContent(inventoryJson, System.Text.Encoding.UTF8, "application/json");
@@ -300,7 +300,7 @@ public class ShopController : MonoBehaviour
     }
     static async void PostLogOnServer(ShopController self, Log log)//Отправка лога на сервер 
     {
-        string requestUrl = $"https://2025.nti-gamedev.ru/api/games/d5ebfca3-ee6d-485f-9a9b-a53809bfcb62/logs/";
+        string requestUrl = $"https://2025.nti-gamedev.ru/api/games/e9631fb2-0408-421c-a35f-140a70f2a916/logs/";
 
         HttpClient httpClient = new HttpClient();
         string logJson = JsonConvert.SerializeObject(log);
