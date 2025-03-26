@@ -34,7 +34,7 @@ public class ModsLoader : MonoBehaviour
         texture.LoadImage(pngData);
         texture.filterMode = FilterMode.Point;
         texture.Apply();
-        return Sprite.Create(texture, new Rect(0, 0, size.x,size.y), Vector2.zero);
+        return Sprite.Create(texture, new Rect(0, 0, size.x,size.y), new Vector2(0.5f,0.5f));
     }
     public void OpenFolderInExplorer()
     {

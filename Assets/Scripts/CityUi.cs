@@ -12,7 +12,9 @@ public class CityUi : MonoBehaviour
     [SerializeField] private Image image;
     [SerializeField] private TextMeshProUGUI text1;
     private List<string> names = new List<string>() {"-", "Александр Орешников", "Мария Тенелюбова", "Василий Добронравов", "Анита Тяжелая Лапа", "-", "Сунь Цзинь" };
+    private List<string> discrips = new List<string>() {"-", "Александр Орешников", "Мария Тенелюбова", "Василий Добронравов", "Анита Тяжелая Лапа", "-", "Сунь Цзинь" };
     [SerializeField] private TextMeshProUGUI Name;
+    [SerializeField] private TextMeshProUGUI Discription;
     [SerializeField] private List<Sprite> sprites_war;
     [SerializeField] private TextMeshProUGUI countBear;
     [SerializeField] private List<Sprite> sprites_deffolt;
@@ -24,7 +26,24 @@ public class CityUi : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        PlayerPrefs.SetInt($"Gift1{num}",20);
+        PlayerPrefs.SetInt($"Gift3{num}",100);
+        PlayerPrefs.SetInt($"Gift2{num}",50);
+        for (int i = 0; i < Mod.mods.Count; i++)
+        {
+            if (Mod.mods[i].civi != null)
+            {
+                PlayerPrefs.SetInt($"Gift1{num}", (int)Mod.mods[i].civi.Gift1);
+                PlayerPrefs.SetInt($"Gift2{num}", (int)Mod.mods[i].civi.Gift2);
+                PlayerPrefs.SetInt($"Gift3{num}", (int)Mod.mods[i].civi.Gift3);
+                sprites_deffolt[3] = Mod.mods[i].civi.Ok;
+                sprites_franding[3] = Mod.mods[i].civi.Joy;
+                sprites_war[3] = Mod.mods[i].civi.Angry;
+                names[3] = Mod.mods[i].civi.Name;
+                discrips[3] = Mod.mods[i].civi.Description;
+            }
+        }
+
     }
     public void OpenShop()
     {
@@ -46,6 +65,7 @@ public class CityUi : MonoBehaviour
     public void UpdateInfo(int numb)
     {
         num = numb;
+        Discription.text = discrips[numb];
         countBear.text = PlayerPrefs.GetInt($"countLiversIdle{num}").ToString();
         int friendy = PlayerPrefs.GetInt($"friendy{num}");
         image.fillAmount = friendy / 100f;

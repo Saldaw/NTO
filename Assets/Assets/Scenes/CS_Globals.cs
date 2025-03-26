@@ -7,6 +7,7 @@ public class CS_Globals
 {
     public static uint Progress = 0;
     public static uint Level = 1;
+    public static int Seed = int.MinValue;
     public static uint GrassEaten = 0;
     public static uint MeatyEaten = 0;
 
