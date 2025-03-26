@@ -22,11 +22,20 @@ public class State : MonoBehaviour
     [SerializeField] private GameObject vibor;
     [SerializeField] private GameObject endmenu;
     [SerializeField] private GameObject loading;
+    [SerializeField] private Image icon;
 
     // Start is called before the first frame update
     void Start()
     {
         UpdateResurs();
+        for (int i = 0; i < Mod.mods.Count; i++)
+        {
+            if (Mod.mods[i].Type == 2)
+            {
+                icon.sprite = Mod.mods[i].clan.Icon;
+            }
+        }
+        
         Time.timeScale = 1.0f;
         if (CS_Globals.MeatyEaten >= CS_Globals.GrassEaten)
         {

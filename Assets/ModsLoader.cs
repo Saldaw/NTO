@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using System.Linq;
 
 
 public class ModsLoader : MonoBehaviour
@@ -21,7 +22,7 @@ public class ModsLoader : MonoBehaviour
         string[] allMods = Directory.GetDirectories(mapsPath);
         for (int i = 0; i < allMods.Length; i++)
         {
-            string[] readedLines = File.ReadAllLines(allMods[i] + "meta.txt");
+            string[] readedLines = File.ReadAllLines(allMods[i] + "\\meta.txt");
             Mod.mods.Add(ModParse(readedLines));
         }
         
@@ -46,39 +47,41 @@ public class ModsLoader : MonoBehaviour
         if (text[0] == "Cell")
         {
             mod.Type = 1;
+            mod.cell = new CellMod();
             mod.cell.IsPredator = text[1] == "1";
             mod.cell.HP = int.Parse(text[2]);
             mod.cell.Speed = int.Parse(text[3]);
             mod.cell.Damage = int.Parse(text[4]);
 
-            mod.cell.Image = GetImage(text[5], new Vector2Int(50, 83));
+            mod.cell.Image = GetImage(Path.Combine(rootPath, "Mods", text[5]) , new Vector2Int(50, 83));
         }
         else if (text[0] == "Clan")
         {
             mod.Type = 2;
-
+            mod.clan = new ClanMod();
             mod.clan.WoodSpeed = int.Parse(text[1]);
             mod.clan.HoneySpeed = int.Parse(text[2]);
             mod.clan.TowerDamage = int.Parse(text[3]);
             mod.clan.BearSpeed = int.Parse(text[4]);
             mod.clan.HeroDamage = int.Parse(text[5]);
 
-            mod.clan.Icon = GetImage(text[6], new Vector2Int(83, 81));
+            mod.clan.Icon = GetImage(Path.Combine(rootPath, "Mods", text[6]), new Vector2Int(83, 81));
         }
         else if (text[0] == "Civi")
         {
             mod.Type = 3;
+            mod.civi = new CiviMod();
             mod.civi.Description = text[1];
 
             mod.civi.Gift1 = int.Parse(text[2]);
             mod.civi.Gift2 = int.Parse(text[3]);
             mod.civi.Gift3 = int.Parse(text[4]);
 
-            mod.civi.Ok = GetImage(text[5], new Vector2Int(256, 256));
+            mod.civi.Ok = GetImage(Path.Combine(rootPath, "Mods", text[5]), new Vector2Int(256, 256));
 
-            mod.civi.Angry = GetImage(text[6], new Vector2Int(256, 256));
+            mod.civi.Angry = GetImage(Path.Combine(rootPath, "Mods", text[6]), new Vector2Int(256, 256));
 
-            mod.civi.Joy = GetImage(text[7], new Vector2Int(256, 256));
+            mod.civi.Joy = GetImage(Path.Combine(rootPath, "Mods", text[7]), new Vector2Int(256, 256));
         }
 
         return mod;
@@ -94,7 +97,7 @@ public class ModsLoader : MonoBehaviour
 
 public class Mod
 {
-    public static List<Mod> mods;
+    public static List<Mod> mods = new List<Mod>();
     public CellMod cell;
     public ClanMod clan;
     public CiviMod civi;

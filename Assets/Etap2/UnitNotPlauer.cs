@@ -18,6 +18,14 @@ public class UnitNotPlauer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        for (int i = 0; i < Mod.mods.Count; i++)
+        {
+            if (Mod.mods[i].clan != null)
+            {
+                playerNavigation.speed += Mod.mods[i].clan.BearSpeed;
+                damage += (int)Mod.mods[i].clan.HeroDamage;
+            }
+        }
         animator = GetComponent<Animator>();
         state = FindObjectOfType<State>();
         List<Build> builds = state.playerBuilds;

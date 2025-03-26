@@ -12,7 +12,13 @@ public class TrigerZone : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        for (int i = 0; i < Mod.mods.Count; i++)
+        {
+            if (Mod.mods[i].clan != null)
+            {
+                damage += (int)Mod.mods[i].clan.TowerDamage;
+            }
+        }
     }
     void OnTriggerEnter(Collider other)
     {

@@ -19,6 +19,9 @@ public class Build : MonoBehaviour
     [SerializeField] private GameObject Unitmenu;
     [SerializeField] private GameObject HPBar;
 
+    private float WoodSpeed = 0;
+    private float HoneySpeed = 0;
+
     public void SetBuilding(int newType)
     {
         type = newType;
@@ -75,7 +78,7 @@ public class Build : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(10f+ HoneySpeed);
             state.honey += 10+state.level*10;
             state.UpdateResurs();
             
@@ -85,7 +88,7 @@ public class Build : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(10f+ WoodSpeed);
             state.wood += 10 + state.level * 10;
             state.UpdateResurs();
         }
@@ -106,7 +109,14 @@ public class Build : MonoBehaviour
     }  // Start is called before the first frame update
     void Start()
     {
-
+        for (int i = 0; i < Mod.mods.Count; i++)
+        {
+            if (Mod.mods[i].clan != null)
+            {
+                HoneySpeed += Mod.mods[i].clan.HoneySpeed;
+                WoodSpeed += (int)Mod.mods[i].clan.WoodSpeed;
+            }
+        }
     }
 
     // Update is called once per frame

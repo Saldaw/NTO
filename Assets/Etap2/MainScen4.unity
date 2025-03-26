@@ -7672,6 +7672,7 @@ MonoBehaviour:
   vibor: {fileID: 1312477360}
   endmenu: {fileID: 699685077}
   loading: {fileID: 1452544206}
+  icon: {fileID: 1157584245}
 --- !u!4 &800133656
 Transform:
   m_ObjectHideFlags: 0
