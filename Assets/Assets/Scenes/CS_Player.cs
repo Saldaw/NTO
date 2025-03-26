@@ -28,6 +28,7 @@ public class CS_Player : MonoBehaviour
 
     public void Start()
     {
+        CS_Globals.Cells.Add(gameObject);
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         Mouth = transform.GetChild(0).gameObject;
@@ -36,6 +37,8 @@ public class CS_Player : MonoBehaviour
 
     public void FixedUpdate()
     {
+        //Debug.Log(CS_Globals.Cells[0] + " " + CS_Globals.Cells[1] + " " + CS_Globals.Cells[2]);
+
         // controls ._.
         Control();
 
@@ -98,5 +101,22 @@ public class CS_Player : MonoBehaviour
 
         // apply the force
         rb.AddForce(vel);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.name != "Mouth")
+            return;
+
+        // getting angle
+        float angle = Mathf.Atan2(
+            other.transform.position.y - transform.position.y,
+            other.transform.position.x - transform.position.x) + Mathf.PI;
+
+        // pushing away
+        rb.AddForce(
+            new Vector2(
+                300 * Mathf.Cos(angle),
+                300 * Mathf.Sin(angle)));
     }
 }

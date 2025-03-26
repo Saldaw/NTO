@@ -16,6 +16,9 @@ public class CS_Food : MonoBehaviour
         // different script for cell and not cell
         if (other.transform.parent.name != "PlayerCell")
         {
+            if (other.transform.parent.GetComponent<CS_AI>().IsPredator == IsGrass)
+                return;
+
             // destroying the object
             Destroy(gameObject);
             return;   

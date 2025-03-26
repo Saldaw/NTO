@@ -1,12 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Randoms = UnityEngine.Random;
 using UnityEngine;
-using System.Xml.Linq;
-using UnityEngine.UIElements;
 
 public class CS_AI : MonoBehaviour
 {
@@ -167,7 +161,7 @@ public class CS_AI : MonoBehaviour
                     i.transform.position);
 
             // the result of search
-            return dist < 10 && IsPredator == meaty;
+            return dist < 15 && IsPredator == meaty;
         });
 
         // changing the state

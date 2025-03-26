@@ -20,7 +20,7 @@ public class CS_Globals
         => (float)Progress / RequiredProgress();
 
     public static int RequiredProgress()
-        => (int)Level * 5;
+        => (int)Level * 3;
 
     public static void Evolve()
     {

@@ -12,6 +12,8 @@ public class CS_UI : MonoBehaviour
     public GameObject BarFill;
     public GameObject UpgradeButton;
 
+    public Sprite EvolveImage;
+
     public void Start()
     {
         // rect transform of button
@@ -32,9 +34,8 @@ public class CS_UI : MonoBehaviour
         // text of upgrade
         if (CS_Globals.Level == 3)
             UpgradeButton.transform
-                .GetChild(0)
-                .GetComponent<TMP_Text>()
-                .text = "Эволюция";
+                .GetComponent<Image>()
+                .sprite = EvolveImage;
 
         // getting the rect transform
         var bfrt = BarFill.GetComponent<RectTransform>();
