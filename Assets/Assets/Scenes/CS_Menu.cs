@@ -18,6 +18,10 @@ public class CS_Menu : MonoBehaviour
     {
         StartCoroutine(loadLevel(0));
     }
+    public void OpenLevel(int i)
+    {
+        StartCoroutine(loadLevel(i));
+    }
     IEnumerator loadLevel(int num)
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(num);

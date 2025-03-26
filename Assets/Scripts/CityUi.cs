@@ -26,6 +26,7 @@ public class CityUi : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1f;
         PlayerPrefs.SetInt($"Gift1{num}",20);
         PlayerPrefs.SetInt($"Gift3{num}",100);
         PlayerPrefs.SetInt($"Gift2{num}",50);
@@ -43,7 +44,7 @@ public class CityUi : MonoBehaviour
                 discrips[3] = Mod.mods[i].civi.Description;
             }
         }
-
+        this.gameObject.SetActive(false);
     }
     public void OpenShop()
     {
