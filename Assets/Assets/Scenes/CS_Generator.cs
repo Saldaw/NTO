@@ -41,8 +41,16 @@ public class CS_Generator : MonoBehaviour
     // start
     public void Start()
     {
-        // add player to the list
-        //CS_Globals.Cells.Add(gameObject); // dont kill the player -_-
+        // add all stuff from mods
+        foreach (var m in Mod.mods)
+        {
+            if (m.Type != 1)
+                continue;
+
+            m.cell.Image.name += m.cell.IsPredator ? "P" : "G";
+
+            CellsSprites.Add(m.cell.Image);
+        }
 
         // initializing previous pos
         PreviousPosition = transform.position;
