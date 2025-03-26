@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 
 public class ModsLoader : MonoBehaviour
@@ -23,6 +24,16 @@ public class ModsLoader : MonoBehaviour
             string[] readedLines = File.ReadAllLines(allMods[i] + "meta.txt");
             Mod.mods.Add(ModParse(readedLines));
         }
+        
+    }
+    Sprite GetImage(string url,Vector2Int size)
+    {
+        byte[] pngData = File.ReadAllBytes(url);
+        Texture2D texture = new Texture2D(size.x,size.y);
+        texture.LoadImage(pngData);
+        texture.filterMode = FilterMode.Point;
+        texture.Apply();
+        return Sprite.Create(texture, new Rect(0, 0, size.x,size.y), Vector2.zero);
     }
     public void OpenFolderInExplorer()
     {
@@ -39,7 +50,7 @@ public class ModsLoader : MonoBehaviour
             mod.cell.Speed = int.Parse(text[2]);
             mod.cell.Damage = int.Parse(text[3]);
 
-            // подставь text[4], это и есть путь к изображению
+            mod.cell.Image = GetImage(text[4], new Vector2Int(50, 83));
             mod.cell.Image = null;
         }
         else if (text[0] == "Clan")
@@ -59,8 +70,8 @@ public class ModsLoader : MonoBehaviour
                 mod.clan.HeroDamage = int.Parse(text[2]);
 
             if (text[3] != "-")
-                // подставь text[3], это и есть путь к изображению
-                mod.clan.Icon = null;
+                mod.clan.Icon = GetImage(text[3], new Vector2Int(83, 81));
+            mod.clan.Icon = null;
         }
         else if (text[0] == "Civi")
         {
@@ -71,14 +82,11 @@ public class ModsLoader : MonoBehaviour
             mod.civi.Gift2 = int.Parse(text[3]);
             mod.civi.Gift3 = int.Parse(text[4]);
 
-            // подставь text[5], это и есть путь к изображению
-            mod.civi.Ok = null;
+            mod.civi.Ok = GetImage(text[5], new Vector2Int(256, 256));
 
-            // подставь text[6], это и есть путь к изображению
-            mod.civi.Angry = null;
-            
-            // подставь text[7], это и есть путь к изображению
-            mod.civi.Joy = null;
+            mod.civi.Angry = GetImage(text[6], new Vector2Int(256, 256));
+
+            mod.civi.Joy = GetImage(text[7], new Vector2Int(256, 256));
         }
 
         return mod;
@@ -119,7 +127,7 @@ public class ClanMod
     public float TowerDamage;
     public float BearSpeed;
     public float HeroDamage;
-    public Image Icon;
+    public Sprite Icon;
 }
 
 public class CiviMod
@@ -128,7 +136,7 @@ public class CiviMod
     public float Gift1;
     public float Gift2;
     public float Gift3;
-    public Image Ok;
-    public Image Angry;
-    public Image Joy;
+    public Sprite Ok;
+    public Sprite Angry;
+    public Sprite Joy;
 }

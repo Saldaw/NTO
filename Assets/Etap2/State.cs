@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 
 public class State : MonoBehaviour
 {
@@ -19,6 +22,7 @@ public class State : MonoBehaviour
     [SerializeField] private GameObject vibor;
     [SerializeField] private GameObject endmenu;
     [SerializeField] private GameObject loading;
+
     // Start is called before the first frame update
     void Start()
     {
