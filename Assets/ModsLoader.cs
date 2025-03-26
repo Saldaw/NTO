@@ -57,19 +57,27 @@ public class ModsLoader : MonoBehaviour
                 mod.clan.BearSpeed = int.Parse(text[2]);
             else if (text[1] == "HeroDamage")
                 mod.clan.HeroDamage = int.Parse(text[2]);
+
+            if (text[3] != "-")
+                // подставь text[3], это и есть путь к изображению
+                mod.clan.Icon = null;
         }
         else if (text[0] == "Civi")
         {
             mod.Type = 3;
             mod.civi.Description = text[1];
 
-            // подставь text[2], это и есть путь к изображению
+            mod.civi.Gift1 = int.Parse(text[2]);
+            mod.civi.Gift2 = int.Parse(text[3]);
+            mod.civi.Gift3 = int.Parse(text[4]);
+
+            // подставь text[5], это и есть путь к изображению
             mod.civi.Ok = null;
 
-            // подставь text[3], это и есть путь к изображению
+            // подставь text[6], это и есть путь к изображению
             mod.civi.Angry = null;
             
-            // подставь text[4], это и есть путь к изображению
+            // подставь text[7], это и есть путь к изображению
             mod.civi.Joy = null;
         }
 
@@ -111,11 +119,15 @@ public class ClanMod
     public float TowerDamage;
     public float BearSpeed;
     public float HeroDamage;
+    public Image Icon;
 }
 
 public class CiviMod
 {
     public string Description;
+    public float Gift1;
+    public float Gift2;
+    public float Gift3;
     public Image Ok;
     public Image Angry;
     public Image Joy;
