@@ -46,32 +46,24 @@ public class ModsLoader : MonoBehaviour
         if (text[0] == "Cell")
         {
             mod.Type = 1;
-            mod.cell.HP = int.Parse(text[1]);
-            mod.cell.Speed = int.Parse(text[2]);
-            mod.cell.Damage = int.Parse(text[3]);
+            mod.cell.IsPredator = text[1] == "1";
+            mod.cell.HP = int.Parse(text[2]);
+            mod.cell.Speed = int.Parse(text[3]);
+            mod.cell.Damage = int.Parse(text[4]);
 
-            mod.cell.Image = GetImage(text[4], new Vector2Int(50, 83));
-            mod.cell.Image = null;
+            mod.cell.Image = GetImage(text[5], new Vector2Int(50, 83));
         }
         else if (text[0] == "Clan")
         {
             mod.Type = 2;
-            mod.clan.Type = text[1];
 
-            if (text[1] == "WoodSpeed")
-                mod.clan.WoodSpeed = int.Parse(text[2]);
-            else if (text[1] == "HoneySpeed")
-                mod.clan.HoneySpeed = int.Parse(text[2]);
-            else if (text[1] == "TowerDamage")
-                mod.clan.TowerDamage = int.Parse(text[2]);
-            else if (text[1] == "BearSpeed")
-                mod.clan.BearSpeed = int.Parse(text[2]);
-            else if (text[1] == "HeroDamage")
-                mod.clan.HeroDamage = int.Parse(text[2]);
+            mod.clan.WoodSpeed = int.Parse(text[1]);
+            mod.clan.HoneySpeed = int.Parse(text[2]);
+            mod.clan.TowerDamage = int.Parse(text[3]);
+            mod.clan.BearSpeed = int.Parse(text[4]);
+            mod.clan.HeroDamage = int.Parse(text[5]);
 
-            if (text[3] != "-")
-                mod.clan.Icon = GetImage(text[3], new Vector2Int(83, 81));
-            mod.clan.Icon = null;
+            mod.clan.Icon = GetImage(text[6], new Vector2Int(83, 81));
         }
         else if (text[0] == "Civi")
         {
@@ -111,6 +103,7 @@ public class Mod
 
 public class CellMod
 {
+    public bool IsPredator;
     public float Speed;
     public float HP;
     public float Damage;
@@ -118,10 +111,7 @@ public class CellMod
 }
 
 public class ClanMod
-{
-    // "WoodSpeed" / "HoneySpeed" / "TowerDamage" / "BearSpeed" / "HeroDamage"
-    public string Type;
-    
+{   
     public float WoodSpeed;
     public float HoneySpeed;
     public float TowerDamage;
