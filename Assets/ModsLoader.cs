@@ -49,11 +49,8 @@ public class ModsLoader : MonoBehaviour
             mod.Type = 1;
             mod.cell = new CellMod();
             mod.cell.IsPredator = text[1] == "1";
-            mod.cell.HP = int.Parse(text[2]);
-            mod.cell.Speed = int.Parse(text[3]);
-            mod.cell.Damage = int.Parse(text[4]);
 
-            mod.cell.Image = GetImage(Path.Combine(rootPath, "Mods", text[5]) , new Vector2Int(50, 83));
+            mod.cell.Image = GetImage(Path.Combine(rootPath, "Mods", text[2]) , new Vector2Int(50, 83));
         }
         else if (text[0] == "Clan")
         {
@@ -71,17 +68,18 @@ public class ModsLoader : MonoBehaviour
         {
             mod.Type = 3;
             mod.civi = new CiviMod();
-            mod.civi.Description = text[1];
+            mod.civi.Name = text[1];
+            mod.civi.Description = text[2];
 
-            mod.civi.Gift1 = int.Parse(text[2]);
-            mod.civi.Gift2 = int.Parse(text[3]);
-            mod.civi.Gift3 = int.Parse(text[4]);
+            mod.civi.Gift1 = int.Parse(text[3]);
+            mod.civi.Gift2 = int.Parse(text[4]);
+            mod.civi.Gift3 = int.Parse(text[5]);
 
-            mod.civi.Ok = GetImage(Path.Combine(rootPath, "Mods", text[5]), new Vector2Int(256, 256));
+            mod.civi.Ok = GetImage(Path.Combine(rootPath, "Mods", text[6]), new Vector2Int(256, 256));
 
-            mod.civi.Angry = GetImage(Path.Combine(rootPath, "Mods", text[6]), new Vector2Int(256, 256));
+            mod.civi.Angry = GetImage(Path.Combine(rootPath, "Mods", text[7]), new Vector2Int(256, 256));
 
-            mod.civi.Joy = GetImage(Path.Combine(rootPath, "Mods", text[7]), new Vector2Int(256, 256));
+            mod.civi.Joy = GetImage(Path.Combine(rootPath, "Mods", text[8]), new Vector2Int(256, 256));
         }
 
         return mod;
@@ -107,9 +105,6 @@ public class Mod
 public class CellMod
 {
     public bool IsPredator;
-    public float Speed;
-    public float HP;
-    public float Damage;
     public Sprite Image;
 }
 
@@ -126,6 +121,7 @@ public class ClanMod
 public class CiviMod
 {
     public string Description;
+    public string Name;
     public float Gift1;
     public float Gift2;
     public float Gift3;
