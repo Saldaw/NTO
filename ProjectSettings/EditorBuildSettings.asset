@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Assets/Scenes/CellStage.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Etap2/perehod1.unity
+    guid: 2d53d523f9d78d741b91b37b60b8ea98
   m_configObjects: {}

@@ -34,7 +34,7 @@ public class CityParametr : MonoBehaviour
     }
     void Start()
     {
-        if (PlayerPrefs.HasKey($"friendy{numSity}"))
+        if (PlayerPrefs.HasKey($"isDie{numSity}"))
         {
             isDie = PlayerPrefs.GetInt($"isDie{numSity}");
             friendy = PlayerPrefs.GetInt($"friendy{numSity}");
@@ -54,7 +54,7 @@ public class CityParametr : MonoBehaviour
     {
         countLivers = Random.Range(10, 20);
         defense = Random.Range(0, 0);
-        friendy = Random.Range(40, 60);
+        friendy = PlayerPrefs.GetInt($"friendy{numSity}",Random.Range(40, 60));
         trade = Random.Range(40, 60);
         SaveParametrs();
 
@@ -77,7 +77,6 @@ public class CityParametr : MonoBehaviour
             PlayerPrefs.SetInt("MaxBearsInFabric", 10);
             PlayerPrefs.SetInt("FabricTime", 10);
             PlayerPrefs.Save();
-            Debug.Log("FffF");
         }
     }
 }

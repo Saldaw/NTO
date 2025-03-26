@@ -9,6 +9,7 @@ public class State : MonoBehaviour
     public int honey;
     public int wood;
     public int level;
+    public int numVilage;
     public NotPlayerBuild targetBuild;
     public GameObject Home;
     public List<Unit> playerUnits = new List<Unit>();
@@ -23,6 +24,15 @@ public class State : MonoBehaviour
     {
         UpdateResurs();
         Time.timeScale = 1.0f;
+        if (CS_Globals.MeatyEaten >= CS_Globals.GrassEaten)
+        {
+            wood = (int)(wood * 1.2f);
+        }
+        else
+        {
+            honey = (int)(honey * 1.2f);
+        }
+        UpdateResurs();
     }
     public void UpdateResurs()
     {

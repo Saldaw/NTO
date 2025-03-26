@@ -24,7 +24,7 @@ public class CS_Globals
 
     public static void Evolve()
     {
-        SceneManager.LoadSceneAsync(2);
+        SceneManager.LoadSceneAsync(8);
         // код для перехода на следующий этап сюда
         // если понадобится, можешь использвать переменные
         // GrassEaten: количество съеденной травы

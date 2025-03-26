@@ -461,7 +461,7 @@ MonoBehaviour:
       - m_Target: {fileID: 1312477364}
         m_TargetAssemblyTypeName: SelectVibor, Assembly-CSharp
         m_MethodName: NextLevel
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6816,6 +6816,7 @@ MonoBehaviour:
   honey: 50
   wood: 75
   level: 2
+  numVilage: 2
   targetBuild: {fileID: 0}
   Home: {fileID: 1319913419}
   playerUnits: []
@@ -6908,8 +6909,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -14294,11 +14295,11 @@ MonoBehaviour:
       - m_Target: {fileID: 1312477364}
         m_TargetAssemblyTypeName: SelectVibor, Assembly-CSharp
         m_MethodName: NextLevel
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -20781,11 +20782,11 @@ MonoBehaviour:
       - m_Target: {fileID: 1312477364}
         m_TargetAssemblyTypeName: SelectVibor, Assembly-CSharp
         m_MethodName: NextLevel
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0

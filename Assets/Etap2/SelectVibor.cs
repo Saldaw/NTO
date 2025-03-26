@@ -12,8 +12,17 @@ public class SelectVibor : MonoBehaviour
     {
         
     }
-    public void NextLevel()
+    public void NextLevel(int i)
     {
+        switch (i)
+        {
+            case 0:
+                PlayerPrefs.SetInt($"friendy{state.numVilage}", 20);
+                break;
+            case 2:
+                PlayerPrefs.SetInt($"friendy{state.numVilage}", 65);
+                break;
+        }
         if (state.level==4)
         {
             StartCoroutine(loadLevel(1));

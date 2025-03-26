@@ -53,9 +53,9 @@ public class ShopCreator : MonoBehaviour
         Shop shop = new Shop();
         shop.name = name;
         shop.resources = shopRes;
-        PostShopOnServer(playerName, shop);
+        //PostShopOnServer(playerName, shop);
     }
-    static async void PostShopOnServer(string playerName, Shop shop)//Создать магазин на сервере 
+    /*static async void PostShopOnServer(string playerName, Shop shop)//Создать магазин на сервере 
     {
         string requestUrl = $"https://2025.nti-gamedev.ru/api/games/e9631fb2-0408-421c-a35f-140a70f2a916/players/{playerName}/shops/";
 
@@ -76,6 +76,6 @@ public class ShopCreator : MonoBehaviour
         {
             Debug.Log($"An error occurred: {ex.Message}");
         }
-    }
+    }*/
     //-----------------------------------------------------------\\
 }
