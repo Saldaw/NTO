@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    //----------------------Название в логах---------------------\\
+   /* //----------------------Название в логах---------------------\\
     const string add_food = "add_food";
     const string add_materials = "add_materials";
     const string add_electronics = "add_electronics";
@@ -19,7 +19,7 @@ public class Inventory : MonoBehaviour
     const string add_goldhoney = "add_goldhoney";
     //-----------------------------------------------------------\\
     private string playerName;
-    private bool online;
+    private bool online;*/
     //--------------------------Классы--------------------------\\
     [Serializable] public class PlayerInventory : ICloneable
     {
@@ -53,12 +53,12 @@ public class Inventory : MonoBehaviour
     //--------------------------Инвентарь--------------------------\\
     private PlayerInventory localPlayerInventory = new PlayerInventory
     {
-        food = 0,
-        materials = 0,
-        electronics = 0,
-        weapons = 0,
-        energyhoney = 1,
-        goldhoney = 0,
+        food = 2,
+        materials = 2,
+        electronics = 2,
+        weapons = 3,
+        energyhoney = 5,
+        goldhoney = 1,
     };
     private PlayerInventory changesPlayerInventory = new PlayerInventory
     {
@@ -73,7 +73,7 @@ public class Inventory : MonoBehaviour
     
     public void ChangeResurs(PlayerInventory changes, string comment)//Изменить колличество ресурсов 
     {
-        Dictionary<string, int> resourcesChanged = new Dictionary<string, int>();
+        //Dictionary<string, int> resourcesChanged = new Dictionary<string, int>();
 
         localPlayerInventory.food += changes.food;
         localPlayerInventory.materials += changes.materials;
@@ -82,7 +82,7 @@ public class Inventory : MonoBehaviour
         localPlayerInventory.energyhoney += changes.energyhoney;
         localPlayerInventory.goldhoney += changes.goldhoney;
         resursInfo.UodateInfo(localPlayerInventory);
-        if (online)
+        /*if (online)
         {
             changesPlayerInventory.food += changes.food;
             changesPlayerInventory.materials += changes.materials;
@@ -97,14 +97,14 @@ public class Inventory : MonoBehaviour
             if (changes.energyhoney != 0) resourcesChanged.Add(add_energyhoney, changes.energyhoney);
             if (changes.goldhoney != 0) resourcesChanged.Add(add_goldhoney, changes.goldhoney);
             CreateLog(comment, resourcesChanged);
-        }
+        }*/
     }
     public PlayerInventory GetLocalInventory()
     {
         return localPlayerInventory;
     } //Получить локальный инвентарь
 
-    private void CreateLog(string comment, Dictionary<string, int> resourcesThatChanged)//Создание лога 
+    /*private void CreateLog(string comment, Dictionary<string, int> resourcesThatChanged)//Создание лога 
     {
         Log log = new Log()
         {
@@ -113,8 +113,8 @@ public class Inventory : MonoBehaviour
             resources_changed = resourcesThatChanged
         };
         Logs.Add(log);
-    }
-    private void CheckCorrect(PlayerInventory inventoryOnServer)//Проверка совпадения локальных данных и данных сервера 
+    }*/
+    /*private void CheckCorrect(PlayerInventory inventoryOnServer)//Проверка совпадения локальных данных и данных сервера 
     {
         PlayerInventory correctPlayerInventory = new PlayerInventory()
         {
@@ -143,10 +143,10 @@ public class Inventory : MonoBehaviour
             resursInfo.UodateInfo(localPlayerInventory);
         }
         SetInventoryOnServer(this, playerName, correctPlayerInventory);
-    }
+    }*/
 
     //---------------------Работа с сервером---------------------\\
-    static async void GetInventoryFromServer(Inventory self)//Получение инвентаря игрока с сервера 
+    /*static async void GetInventoryFromServer(Inventory self)//Получение инвентаря игрока с сервера 
     {
         try
         {
@@ -216,17 +216,17 @@ public class Inventory : MonoBehaviour
             self.errorUI.AddError(content, requestUrl);
             Debug.Log($"An error occurred: {ex.Message}");
         }
-    }
+    }*/
     //-----------------------------------------------------------\\
 
     void Start()
-    {
+    {/*
         playerName = PlayerPrefs.GetString("Name");
         online = PlayerPrefs.GetInt("Online") == 1;
         GetInventoryFromServer(this);
-        StartCoroutine(Synchronization());
+        StartCoroutine(Synchronization());*/
     }
-    private IEnumerator Synchronization()//Синхронизация с сервером 
+    /*private IEnumerator Synchronization()//Синхронизация с сервером 
     {
         while (true)
         {
@@ -241,5 +241,5 @@ public class Inventory : MonoBehaviour
             }
             yield return new WaitForSeconds(5f);
         }
-    }
+    }*/
 }

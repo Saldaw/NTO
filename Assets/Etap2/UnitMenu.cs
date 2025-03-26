@@ -18,7 +18,6 @@ public class UnitMenu : MonoBehaviour
                     state.playerUnits.Add(unit.GetComponent<Unit>());
                     state.honey -= state.level * 5 + 5;
                     state.UpdateResurs();
-                    this.gameObject.SetActive(false);
                 }
                 break;
             case 2:
@@ -28,7 +27,6 @@ public class UnitMenu : MonoBehaviour
                     state.playerUnits.Add(unit.GetComponent<Unit>());
                     state.honey -= state.level * 5 + 10;
                     state.UpdateResurs();
-                    this.gameObject.SetActive(false);
                 }
                 break;
         }

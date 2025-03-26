@@ -34,7 +34,7 @@ public class CS_Player : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-    public void Update()
+    public void FixedUpdate()
     {
         // controls ._.
         Control();

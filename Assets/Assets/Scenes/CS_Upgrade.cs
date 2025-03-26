@@ -35,7 +35,8 @@ public class CS_Upgrade : MonoBehaviour
 
     public void Update()
     {
-        Upgrades.SetActive(Show);
+        if (CS_Globals.Level <= 3)
+            Upgrades.SetActive(Show);
 
         var leftText = LeftText
             .GetComponent<TMP_Text>();
@@ -70,7 +71,7 @@ public class CS_Upgrade : MonoBehaviour
         if (CS_Globals.Level == 2)
         {
             if (left)
-                CS_Player.Speed += 10;
+                CS_Player.Speed += 50;
             else
                 CS_Player.Damage += 4;
         }
@@ -79,7 +80,7 @@ public class CS_Upgrade : MonoBehaviour
             if (left)
                 /* Nothing LOL */;
             else
-                CS_Player.RotationSpeed += 1;
+                CS_Player.RotationSpeed += 4;
         }
 
         Show = false;

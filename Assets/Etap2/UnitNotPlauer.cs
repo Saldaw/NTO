@@ -53,12 +53,14 @@ public class UnitNotPlauer : MonoBehaviour
         HP -= damage;
         if (HP <= 0)
         {
-            Destroy(this.gameObject);
+            animator.SetBool("isDead", true);
+            Destroy(this.gameObject,1.5f);
         }
     }
     // Update is called once per frame
     void Update()
     {
+        animator.SetBool("isMove", true);
         if (target == null)
         {
             Start();

@@ -45,20 +45,22 @@ public class SelectCount : MonoBehaviour
         bear3 = PlayerPrefs.GetInt("countLiversIdle5");
         bear3max = PlayerPrefs.GetInt("countLivers5");
 
-        countText1.text = bear1.ToString();
+        countText1.text = bear3.ToString();
         countText2.text = bear2.ToString();
-        countText3.text = bear3.ToString();
+        countText3.text = bear1.ToString();
         prograssBar1.fillAmount = (float)bear1 / bear1max;
         prograssBar2.fillAmount = (float)bear2 / bear2max;
         prograssBar3.fillAmount = (float)bear3 / bear3max;
     }
     public void CangeFabric(int i)
     {
-        if(bear1+i<=bear1max && bear1 + i >= 0 && bear3-i>=0)
+        if (bear1+i<=bear1max && bear1 + i >= 0 && bear3-i>=0)
         {
             bear1 += i;
+            countText1.text = bear3.ToString();
             prograssBar1.fillAmount = (float)bear1/bear1max;
             bear3 -= i;
+            countText3.text = bear1.ToString();
             fabric.Stop();
         }
         prograssBar3.fillAmount=(float)bear3/bear3max;
@@ -68,8 +70,10 @@ public class SelectCount : MonoBehaviour
         if (bear2 + i <= bear2max && bear2 + i >= 0 && bear3 - i >= 0)
         {
             bear2 += i;
+            countText2.text = bear2.ToString();
             prograssBar2.fillAmount = (float)bear2 / bear2max;
             bear3 -= i;
+            countText1.text = bear3.ToString();
         }
         prograssBar3.fillAmount = (float)bear3 / bear3max;
     }

@@ -77,6 +77,7 @@ public class CityParametr : MonoBehaviour
             PlayerPrefs.SetInt("MaxBearsInFabric", 10);
             PlayerPrefs.SetInt("FabricTime", 10);
             PlayerPrefs.Save();
+            Debug.Log("FffF");
         }
     }
 }

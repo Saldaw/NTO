@@ -28,11 +28,14 @@ public class Unit : MonoBehaviour
         if (HP <= 0)
         {
             state.playerUnits.Remove(this);
-            Destroy(this.gameObject);
+            animator.SetBool("isDead", true);
+            playerNavigation.SetDestination(transform.position);
+            Destroy(this.gameObject, 1.5f);
         }
     }
     public void SetTarget(GameObject target)
     {
+        animator.SetBool("isMove", true);
         targetB = target.GetComponent<NotPlayerBuild>();
         playerNavigation.SetDestination(target.transform.position);
     }

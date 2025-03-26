@@ -21,6 +21,10 @@ public class CS_UI : MonoBehaviour
 
     public void Update()
     {
+        // non active
+        UpgradeButton.GetComponent<Button>()
+            .interactable = !CS_Upgrade.Show && CS_Globals.ProgressPercent() >= 1;
+
         // set the text
         LevelText.text = 
            CS_Globals.Level.ToString();
@@ -44,7 +48,7 @@ public class CS_UI : MonoBehaviour
 
     public void OnUpgrade()
     {
-        if (CS_Globals.ProgressPercent() < 1)
+        if (CS_Globals.ProgressPercent() < 1 && !CS_Upgrade.Show)
             return;
 
         CS_Globals.Progress -=
