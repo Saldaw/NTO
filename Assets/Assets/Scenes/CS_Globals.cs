@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class CS_Globals
 {
+    public static int Seed = 90000;
     public static uint Progress = 0;
-    public static int Seed = 0;
     public static uint Level = 1;
     public static uint GrassEaten = 0;
     public static uint MeatyEaten = 0;
@@ -28,10 +28,7 @@ public class CS_Globals
 
     public static void Evolve()
     {
+        Seed = (int)Mathf.Lerp(Seed, 100000, 0.1f);
         SceneManager.LoadSceneAsync(8);
-        // код для перехода на следующий этап сюда
-        // если понадобится, можешь использвать переменные
-        // GrassEaten: количество съеденной травы
-        // MeatyEaten: количество съеденного мяса
     }
 }

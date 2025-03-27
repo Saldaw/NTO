@@ -59,7 +59,7 @@ public class CS_Upgrade : MonoBehaviour
         }
         else if (CS_Globals.Level == 3)
         {
-            leftText.text = "Увеличить живучесть";
+            leftText.text = "Увеличить душевную силу";
             lIcon.sprite = UpHP;
             rightText.text = "Увеличить скорость\nповорота";
             rIcon.sprite = UpSpeed;
