@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Randoms = System.Random;
+using UnityEngine.UIElements;
 
 public class CS_Generator : MonoBehaviour
 {
     // radius to generate within
     const int SqRadius = 40;
+
+    private static Randoms rand = new Randoms();
 
     // prefabs
     public GameObject FoodPrefab;
@@ -23,10 +27,10 @@ public class CS_Generator : MonoBehaviour
     public Sprite FoodMeatySprite;
 
     // distribution values
-    float FoodDistribution     = 1f / 100f;
-    float BubbleDistribution   = 1f / 100f;
+    float FoodDistribution = 1f / 100f;
+    float BubbleDistribution = 1f / 100f;
     float BubbleBGDistribution = 1f / 400f;
-    float CellsDistribution    = 1f / 800f;
+    float CellsDistribution = 1f / 800f;
 
     // probability of meaty
     float MeatyProbability = 1f / 4f;
@@ -38,9 +42,24 @@ public class CS_Generator : MonoBehaviour
     // for cellular generation
     Vector2 PreviousPosition;
 
+    static int RandSeed = 12345;
+    static float Rand()
+    {
+        RandSeed = RandSeed * 1103515245 + 12345;
+        return (float)((uint)(RandSeed / 65536) % 32768) / 32768;
+    }
+
+    static Vector2 RandVec2() => new Vector2(Rand() * 2 - 1, Rand() * 2 - 1);
+
+    static float PRand(Vector2 pos) =>
+        RandSeed = (int)(pos.x * 10000) + 50000000 + (int)pos.y + 5000 + CS_Globals.Seed;
+
     // start
     public void Start()
     {
+        FoodDistribution = 1 / ((float)CS_Globals.Seed / 500);
+        CellsDistribution = 1 / ((float)(100000 - CS_Globals.Seed) / 62.5f);
+
         // add all stuff from mods
         foreach (var m in Mod.mods)
         {
@@ -132,6 +151,7 @@ public class CS_Generator : MonoBehaviour
     // create all types
     void CreateAll(Vector2 v2)
     {
+        PRand(v2);
         CreateFood(v2);
         CreateBubble(v2);
         CreateBubbleBG(v2);
@@ -142,7 +162,7 @@ public class CS_Generator : MonoBehaviour
     void CreateFood(Vector2 position)
     {
         // only if the chance
-        if (FoodDistribution <= Random.value)
+        if (FoodDistribution <= Rand())
             return;
 
         // create the object
@@ -151,17 +171,17 @@ public class CS_Generator : MonoBehaviour
         // move the object
         obj.transform.position =
             position +
-            Random.insideUnitCircle;
+            RandVec2();
 
         // set random movement
         obj.GetComponent<Rigidbody2D>()
             .velocity =
-                Random.insideUnitCircle *
-                Random.value;
+                RandVec2() *
+                Rand();
 
         // is meat?
         var isMeaty =
-            MeatyProbability > Random.value;
+            MeatyProbability > Rand();
 
         // making it grass always
         obj.GetComponent<CS_Food>()
@@ -180,7 +200,7 @@ public class CS_Generator : MonoBehaviour
     void CreateBubble(Vector2 position)
     {
         // only if the chance
-        if (BubbleDistribution <= Random.value)
+        if (BubbleDistribution <= Rand())
             return;
 
         // create the object
@@ -189,14 +209,14 @@ public class CS_Generator : MonoBehaviour
         // move the object
         obj.transform.position =
             position +
-            (Random.insideUnitCircle -
+            (RandVec2() -
                 new Vector2(0.5f, 0.5f));
 
         // set random movement
         obj.GetComponent<Rigidbody2D>()
             .velocity =
-                Random.insideUnitCircle *
-                Random.value;
+                RandVec2() *
+                Rand();
 
         // add to the list
         Objects.Add(obj);
@@ -206,7 +226,7 @@ public class CS_Generator : MonoBehaviour
     void CreateBubbleBG(Vector2 position)
     {
         // only if the chance
-        if (BubbleBGDistribution <= Random.value)
+        if (BubbleBGDistribution <= Rand())
             return;
 
         // create the object
@@ -217,10 +237,10 @@ public class CS_Generator : MonoBehaviour
             new Vector3(
                 position.x,
                 position.y,
-                Random.value * 6 + 5);
+                Rand() * 6 + 5);
 
         // scaling random value
-        float scale = Random.value * 14 + 5;
+        float scale = Rand() * 14 + 5;
 
         // scaling
         obj.transform.localScale =
@@ -228,15 +248,12 @@ public class CS_Generator : MonoBehaviour
 
         // set random movement
         obj.GetComponent<Rigidbody2D>()
-            .velocity =
-                Random.insideUnitCircle *
-                Random.value *
-                0.5f;
+            .velocity = RandVec2() * Rand() * 0.5f;
 
         // set random sprite
         obj.GetComponent<SpriteRenderer>()
             .sprite = BubbleBGSprites[
-                Random.Range(0, BubbleBGSprites.Count)];
+                (int)(Rand() * BubbleBGSprites.Count)];
 
         // add to the list
         Objects.Add(obj);
@@ -246,7 +263,7 @@ public class CS_Generator : MonoBehaviour
     void CreateCell(Vector2 pos)
     {
         // only if the chance
-        if (CellsDistribution <= Random.value)
+        if (CellsDistribution <= Rand())
             return;
 
         // create object
@@ -256,15 +273,15 @@ public class CS_Generator : MonoBehaviour
         obj.transform.position = pos;
 
         // scaling
-        float scale = Random.value * 2 + 4;
+        float scale = Rand() * 2 + 4;
         obj.transform.localScale =
             new Vector2(scale, scale);
 
-        bool isPredator = Random.value < 0.5;
+        bool isPredator = Rand() < 0.5;
 
         // rotating
         obj.GetComponent<Rigidbody2D>()
-            .rotation = Random.value * 360;
+            .rotation = Rand() * 360;
 
         // randoms eating
         obj.GetComponent<CS_AI>()
@@ -284,5 +301,5 @@ public class CS_Generator : MonoBehaviour
 
     // random item from list
     Sprite RandSpriteFromList(List<Sprite> l) =>
-        l[Random.Range(0, l.Count)];
+        l[(int)(Rand() * l.Count)];
 }

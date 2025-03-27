@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CS_Player : MonoBehaviour
 {
@@ -103,10 +104,15 @@ public class CS_Player : MonoBehaviour
         rb.AddForce(vel);
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.name != "Mouth")
             return;
+
+        // seed
+        CS_Globals.Seed = (int)(CS_Globals.Seed / 1.1f);
+        GetComponent<SpriteRenderer>().color = Color.black;
+        SceneManager.LoadSceneAsync(7);
 
         // getting angle
         float angle = Mathf.Atan2(
