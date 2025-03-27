@@ -23,7 +23,7 @@ public class State : MonoBehaviour
     [SerializeField] private GameObject endmenu;
     [SerializeField] private GameObject loading;
     [SerializeField] private Image icon;
-    public List<Transform> Points;
+    public List<GameObject> Points;
     [SerializeField] private GameObject woodpref;
 
     // Start is called before the first frame update
@@ -38,7 +38,7 @@ public class State : MonoBehaviour
                 icon.sprite = Mod.mods[i].clan.Icon;
             }
         }
-        
+      
         Time.timeScale = 1.0f;
         if (CS_Globals.MeatyEaten >= CS_Globals.GrassEaten)
         {
@@ -121,7 +121,7 @@ public class State : MonoBehaviour
     {
         while (true)
         {
-            Instantiate(woodpref, Points[Random.Range(0, Points.Count)].position,new Quaternion());
+            Instantiate(woodpref, Points[Random.Range(0, Points.Count)].transform.position,new Quaternion());
             yield return new WaitForSeconds (Random.Range(4,10));
         }
         

@@ -27,10 +27,11 @@ public class MainMenu : MonoBehaviour
     }
     IEnumerator loadLevel()
     {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(7);
+        AsyncOperation operation = SceneManager.LoadSceneAsync(9);
         loading.SetActive(true);
         yield return null;
     }
+
 
     public void Exit()
     {
