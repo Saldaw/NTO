@@ -23,10 +23,13 @@ public class State : MonoBehaviour
     [SerializeField] private GameObject endmenu;
     [SerializeField] private GameObject loading;
     [SerializeField] private Image icon;
+    public List<Transform> Points;
+    [SerializeField] private GameObject woodpref;
 
     // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(SpawnWood());
         UpdateResurs();
         for (int i = 0; i < Mod.mods.Count; i++)
         {
@@ -74,6 +77,7 @@ public class State : MonoBehaviour
         targetBuild = null;
         for (int i = 0; i < playerUnits.Count; i++)
         {
+            Instantiate(Points[Random.Range(0, Points.Count)]);
             playerUnits[i].SetTarget(Home.gameObject);
         }
     }
@@ -112,6 +116,15 @@ public class State : MonoBehaviour
         AsyncOperation operation = SceneManager.LoadSceneAsync(num);
         loading.SetActive(true);
         yield return null;
+    }
+    IEnumerator SpawnWood()
+    {
+        while (true)
+        {
+            Instantiate(woodpref, Points[Random.Range(0, Points.Count)].position,new Quaternion());
+            yield return new WaitForSeconds (Random.Range(4,10));
+        }
+        
     }
     // Update is called once per frame
     void Update()
