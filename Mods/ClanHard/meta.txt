@@ -1,0 +1,7 @@
+Clan
+15
+15
+-2
+-2
+-1
+ClanHard\icon.png

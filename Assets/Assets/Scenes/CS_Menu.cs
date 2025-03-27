@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class CS_Menu : MonoBehaviour
 {
     [SerializeField] GameObject loading;
+
     public void Pause()
     {
         Time.timeScale = 0f;

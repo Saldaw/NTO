@@ -1,0 +1,9 @@
+Civi
+Кира Сула
+Мудрая предводительница самой развитого государства. Далекий предок Урсулы, преподавателя Академии.
+16
+32
+64
+PreUrsula\neutral.png
+PreUrsula\agressive.png
+PreUrsula\friendly.png

@@ -18,6 +18,7 @@ public class MainMenu : MonoBehaviour
     {
         CloseSettings();
         Time.timeScale = 1.0f;
+        PlayerPrefs.DeleteAll();
     }
 
     public void Play()

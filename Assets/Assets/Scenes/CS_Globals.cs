@@ -6,10 +6,13 @@ using UnityEngine.SceneManagement;
 public class CS_Globals
 {
     public static uint Progress = 0;
-    public static uint Level = 1;
     public static int Seed = 0;
+    public static uint Level = 1;
     public static uint GrassEaten = 0;
     public static uint MeatyEaten = 0;
+
+    public static Dictionary<string, int> EatenByType =
+        new Dictionary<string, int>();
 
     public static List<GameObject> Foods =
         new List<GameObject>();

@@ -1,0 +1,9 @@
+Civi
+Мурс Курс
+Дипломатичный белый медведь, ставший предводителем за свои достижения. Предок Урса.
+1
+4
+8
+PreUrs/neutral.png
+PreUrs/agressive.png
+PreUrs/friendly.png

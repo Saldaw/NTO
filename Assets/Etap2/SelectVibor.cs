@@ -18,9 +18,14 @@ public class SelectVibor : MonoBehaviour
         {
             case 0:
                 PlayerPrefs.SetInt($"friendy{state.numVilage}", 20);
+                PlayerPrefs.SetString($"stat{state.numVilage}", "Порабощено");
+                break;
+            case 1:
+                PlayerPrefs.SetString($"stat{state.numVilage}", "Взята дань");
                 break;
             case 2:
                 PlayerPrefs.SetInt($"friendy{state.numVilage}", 65);
+                PlayerPrefs.SetString($"stat{state.numVilage}", "Заключён мир");
                 break;
         }
         if (state.level==4)

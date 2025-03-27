@@ -1,6 +1,7 @@
 using System;
 using Randoms = UnityEngine.Random;
 using UnityEngine;
+using System.Linq;
 
 public class CS_AI : MonoBehaviour
 {
@@ -189,6 +190,12 @@ public class CS_AI : MonoBehaviour
             CS_Generator.Objects.Add(obj);
             CS_Globals.Foods.Add(obj);
         }
+
+        string name = GetComponent<SpriteRenderer>().sprite.name[..^1];
+
+        if (!CS_Globals.EatenByType.ContainsKey(name))
+            CS_Globals.EatenByType[name] = 0;
+        CS_Globals.EatenByType[name]++;
 
         // dying
         Destroy(gameObject);

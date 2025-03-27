@@ -19,8 +19,8 @@ public class Build : MonoBehaviour
     [SerializeField] private GameObject Unitmenu;
     [SerializeField] private GameObject HPBar;
 
-    private float WoodSpeed = 0;
-    private float HoneySpeed = 0;
+    private float WoodSpeed = 10;
+    private float HoneySpeed = 10;
 
     public void SetBuilding(int newType)
     {
@@ -78,7 +78,7 @@ public class Build : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(10f+ HoneySpeed);
+            yield return new WaitForSeconds(HoneySpeed);
             state.honey += 10+state.level*10;
             state.UpdateResurs();
             
@@ -88,7 +88,7 @@ public class Build : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(10f+ WoodSpeed);
+            yield return new WaitForSeconds(WoodSpeed);
             state.wood += 10 + state.level * 10;
             state.UpdateResurs();
         }

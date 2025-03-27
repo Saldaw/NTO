@@ -12,7 +12,7 @@ public class CityUi : MonoBehaviour
     [SerializeField] private Image image;
     [SerializeField] private TextMeshProUGUI text1;
     private List<string> names = new List<string>() {"-", "Александр Орешников", "Мария Тенелюбова", "Василий Добронравов", "Анита Тяжелая Лапа", "-", "Сунь Цзинь" };
-    private List<string> discrips = new List<string>() {"-", "Александр Орешников", "Мария Тенелюбова", "Василий Добронравов", "Анита Тяжелая Лапа", "-", "Сунь Цзинь" };
+    private List<string> discrips = new List<string>() {"-", "Только его вид пугает, а ведь это еще не все. Он привык решать все силой: отбирать и воевать. Но если с ним подружиться, дружба с ним и его народом будет навеки.", "Скверный и меркантильный характер. Народ ее никогда так плохо не жил как при ней. За медовые соты готова на любую подлость.", "Предводитель бурых медведей. Он никогда не забудет войны прошлых лет, поэтому его мудрость — умиротворение.", "Пламенная и буйная, она никогда не продаст друга. Но важно помнить, если разозлить её, она обнажит свои когти и будет драться за себя и свой народ.", "-", "Общительный и добрый, он всегда готов к сотрудничеству. Печать на его плече говорит о печальном прошлом. Впрочем народ панд достиг неплохого развития." };
     [SerializeField] private TextMeshProUGUI Name;
     [SerializeField] private TextMeshProUGUI Discription;
     [SerializeField] private List<Sprite> sprites_war;
@@ -27,21 +27,25 @@ public class CityUi : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1f;
-        PlayerPrefs.SetInt($"Gift1{num}",20);
-        PlayerPrefs.SetInt($"Gift3{num}",100);
-        PlayerPrefs.SetInt($"Gift2{num}",50);
+        for (int n = 1; n < 7; n++)
+        {
+            PlayerPrefs.SetInt($"Gift1{n}", 20);
+            PlayerPrefs.SetInt($"Gift3{n}", 100);
+            PlayerPrefs.SetInt($"Gift2{n}", 50);
+        }
         for (int i = 0; i < Mod.mods.Count; i++)
         {
             if (Mod.mods[i].civi != null)
             {
-                PlayerPrefs.SetInt($"Gift1{num}", (int)Mod.mods[i].civi.Gift1);
-                PlayerPrefs.SetInt($"Gift2{num}", (int)Mod.mods[i].civi.Gift2);
-                PlayerPrefs.SetInt($"Gift3{num}", (int)Mod.mods[i].civi.Gift3);
-                sprites_deffolt[3] = Mod.mods[i].civi.Ok;
-                sprites_franding[3] = Mod.mods[i].civi.Joy;
-                sprites_war[3] = Mod.mods[i].civi.Angry;
-                names[3] = Mod.mods[i].civi.Name;
-                discrips[3] = Mod.mods[i].civi.Description;
+                int x = Random.Range(1, 5);
+                PlayerPrefs.SetInt($"Gift1{x}", (int)Mod.mods[i].civi.Gift1);
+                PlayerPrefs.SetInt($"Gift2{x}", (int)Mod.mods[i].civi.Gift2);
+                PlayerPrefs.SetInt($"Gift3{x}", (int)Mod.mods[i].civi.Gift3);
+                sprites_deffolt[x] = Mod.mods[i].civi.Ok;
+                sprites_franding[x] = Mod.mods[i].civi.Joy;
+                sprites_war[x] = Mod.mods[i].civi.Angry;
+                names[x] = Mod.mods[i].civi.Name;
+                discrips[x] = Mod.mods[i].civi.Description;
             }
         }
         this.gameObject.SetActive(false);

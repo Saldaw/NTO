@@ -15,7 +15,6 @@ public class Pause : MonoBehaviour
     }
     public void OpenPause()
     {
-        image.sprite = Sprits[UnityEngine.Random.Range(0, Sprits.Count)];
         Time.timeScale = 0.0f;
         this.gameObject.SetActive(true);
     }

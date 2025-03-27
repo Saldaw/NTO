@@ -43,7 +43,7 @@ public class CS_Player : MonoBehaviour
         Control();
 
         // animate
-        if (CS_Globals.Foods.Any(CheckIfNear) || CS_Globals.Cells.Any(CheckIfNear))
+        if (CS_Globals.Foods.Any(CheckIfNear) || CS_Globals.Cells.Where(i => i != gameObject).Any(CheckIfNear))
             sr.sprite = AttackSprite;
         else if (Time.time * 1000 % 500 < 250 && Input.GetMouseButton(0))
             sr.sprite = MoveSprite;
